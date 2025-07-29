@@ -1,9 +1,9 @@
-import dotenv from "dotenv"
 import pkg from"pg";
+import dotenv from 'dotenv';
 
 dotenv.config();
-const { Pool } = pkg;
 
+const { Pool } = pkg;
 
 const pool = new Pool({
 
@@ -21,16 +21,14 @@ const pool = new Pool({
     },
 })
 
-pool.on("connect", () => {
-    
-    try {
-        console.log("Database connection successfull");
-    } catch (error) {
-        console.log("Error: ", error);
-        
-    }
-    
-})
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error("❌ Database connection failed:", err)
+  } else {
+    console.log("✅ Database connection successful");
+    release(); // release the client back to the pool
+  }
+});
 
 export default pool
 
