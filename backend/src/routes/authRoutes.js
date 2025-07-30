@@ -1,11 +1,18 @@
 import express from "express"
 import passport from "passport";
+import { me } from "../controller/authController.js";
 
 const router = express.Router();
 
-router.get("/google", passport.authenticate('google', { scope: [
+router.get("/me", me)
+
+router.get("/google", 
+  
+  passport.authenticate('google', { scope: [
         'openid', 'email', 'profile']
-    }))
+  })
+
+)
 
 
 

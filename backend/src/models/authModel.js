@@ -1,6 +1,21 @@
 import pool  from "../config/db.js";
+import { NotFoundError } from "../errors/not-found.js";
 import { createAuthToken } from "../utils/jwt.js";
 
+export const meService = async(userId) => {
+    
+    const fetchUser = await pool.query("SELECT * FROM users WHERE id=$1", [userId])
+    const user = fetchUser.rows[0]
+
+    if(!user || user.length === 0){
+        throw new NotFoundError("User with this ID NOT FOUND");
+    }
+
+    return {
+        username: user.username,
+        name: user.name
+    }
+}
 
 export const authService = async ({email, name, provider}) => {
     try {
