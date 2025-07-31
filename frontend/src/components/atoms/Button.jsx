@@ -9,7 +9,7 @@ const Button = ({to, children, className='', ...props}) => {
 
   return (
     <button 
-    className={`text-desktop-p ${className}`}
+    className={`text-desktop-p cursor-pointer ${className}`}
     {...props}>       
           {children}        
     </button>

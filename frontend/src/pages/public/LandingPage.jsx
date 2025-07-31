@@ -1,16 +1,15 @@
 import React from 'react'
 import {Button, Header, Pill} from '../../components/'
 import HeroImg from "../../assets/HeroImg.svg"
-import { Link } from 'react-router-dom'
+import { useUI } from '../../context/UIContext'
 
 
 const LandingPage = () => {
+  const {authModal, setAuthModal} = useUI();
+
   return (
-    <div className='flex flex-col w-full h-screen'>
 
-      <Header />
-
-      <div className='flex max-md:flex-col lg:justify-between items-center w-full h-full max-md:my-8 space-y-5'>
+      <div className='flex max-md:flex-col lg:justify-between items-center w-full max-md:my-8 my-16 space-y-5'>
 
         <div className='px-5 md:pl-12 space-y-5'>
           <Pill text={"For Solo Builders"}/>
@@ -27,8 +26,8 @@ const LandingPage = () => {
 
           <div className='flex justify-start items-center gap-3'>
             
-            <Button
-            to="/register"
+            <Button  
+            onClick={() => setAuthModal("login")}
             className="flex justify-center items-center bg-gradient-to-r from-primary-purple to-primary-blue p-[2px] rounded-lg hover:from-primary-blue hover:to-primary-purple transition duration-300"
           >
             <div className="flex justify-center items-center bg-dark w-full h-full px-4 py-2 rounded-lg hover:bg-primary-purple-800 transition duration-300">
@@ -39,10 +38,10 @@ const LandingPage = () => {
           </Button>
 
           <Button
-            to="/register"
+            to="/browse-project"
             className="flex justify-center items-center bg-gradient-to-r from-primary-purple to-primary-blue p-[2px] rounded-lg hover:from-primary-blue hover:to-primary-purple transition duration-300"
           >
-            <div className="flex justify-center items-center bg-bg w-full h-full px-4 py-2 rounded-lg transition duration-300">
+            <div className="flex justify-center items-center bg-bg w-full h-full px-4 py-2 rounded-lg transition duration-300 hover:bg-gray-100">
               <span className="text-primary-purple-800">Browse Projects</span>
             </div>
           </Button>
@@ -57,7 +56,6 @@ const LandingPage = () => {
 
       </div>
       
-    </div>
   )
 }
 

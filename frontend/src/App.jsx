@@ -1,22 +1,28 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import LandingPage from "./pages/public/LandingPage"
+import PublicLayout from "./layouts/PublicLayout"
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <LandingPage/>
-  },
-  {
-    path: '/login',
-    element: <></>
-  },
-  {
-    path: '/signup',
-    element: <></>
-  },
-  {
-    path: '/auth-redirect',
-    element: <></>
+    element: <PublicLayout/>,
+    children: [
+      {
+        path: '/',
+        element: <LandingPage/>
+      },
+      {
+        path: '/login',
+        element: <></>
+      },
+      {
+        path: '/signup',
+        element: <></>
+      },
+      {
+        path: '/auth-redirect',
+        element: <></>
+      }
+    ]
   },
   {
     element: <></>, // protected route element
