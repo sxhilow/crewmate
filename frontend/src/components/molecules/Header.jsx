@@ -12,16 +12,16 @@ const Header = () => {
         <div className='flex justify-center items-center'>
           <Button to={'/login'} children={"Login"} className='text-dark px-2 font-medium'/>
           
-          <Button to={'/register'} className='flex justify-center items-center bg-gradient-to-r from-primary-purple to-primary-blue p-[2px] rounded-lg hover:from-primary-blue hover:to-primary-purple transition duration-300'>
-
-          <div className='flex justify-center items-center bg-gradient-to-b from-primary-purple-800 to-dark w-full h-full px-3 py-1 md:px-5 md:py-1 rounded-lg hover:from-dark hover:to-primary-purple-800 transition duration-300'>
-            <span className='bg-gradient-to-br bg-clip-text from-neutral-5 to-neutral-7 text-transparent hover:from-neutral-7 hover:to-neutral-5 transition duration-300'>
-              Sign up
-            </span>
-          </div>
-            
-          
-          </Button>
+          <Button
+              to="/register"
+              className="flex justify-center items-center bg-gradient-to-r from-primary-purple to-primary-blue p-[2px] rounded-lg hover:from-primary-blue hover:to-primary-purple transition duration-300"
+            >
+              <div className="flex justify-center items-center bg-dark w-full h-full px-4 py-2 rounded-lg hover:bg-primary-purple-800 transition duration-300">
+                <span className="bg-gradient-to-br from-neutral-5 to-neutral-7 bg-clip-text text-transparent hover:from-neutral-7 hover:to-neutral-5 transition duration-300">
+                  Sign up
+                </span>
+              </div>
+            </Button>
         </div>
         
       </nav>

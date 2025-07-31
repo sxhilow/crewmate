@@ -4,7 +4,7 @@
 
 @theme{
     --font-base: "DM Sans", sans-serif;
-    --color-bg: #F8F9FA;
+    --color-bg: #FBF8FE;
     --color-primary-blue: #4361EE;
     --color-primary-purple: #7209B7;
     --color-primary-purple-800: #2D0449;
@@ -13,6 +13,20 @@
     --color-dark: #212529;
     --color-neutral-5: #C8C9CA;
     --color-neutral-7: #9B9D9F;
+
+    --text-desktop-h1: 65px;
+    --text-desktop-h2: 55px;
+    --text-desktop-h3: 45px;
+    --text-desktop-h4: 35px;
+    --text-desktop-h5: 26px;
+    --text-desktop-p: 16px;
+
+    --text-mobile-h1: 45px;
+    --text-mobile-h2: 35px;
+    --text-mobile-h3: 25px;
+    --text-mobile-h4: 18px;
+    --text-mobile-h5: 16px;
+    --text-mobile-p: 16px;
 }
 
 body{
