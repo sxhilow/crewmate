@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import LandingPage from "./pages/public/LandingPage"
 import PublicLayout from "./layouts/PublicLayout"
+import ProtectedRoutes from "./utils/ProtectedRoutes"
 
 const router = createBrowserRouter([
   {
@@ -11,21 +12,13 @@ const router = createBrowserRouter([
         element: <LandingPage/>
       },
       {
-        path: '/login',
-        element: <></>
-      },
-      {
-        path: '/signup',
-        element: <></>
-      },
-      {
         path: '/auth-redirect',
         element: <></>
       }
     ]
   },
   {
-    element: <></>, // protected route element
+    element: <ProtectedRoutes />, // protected route element
     children: [
       {
         element: <></>,
