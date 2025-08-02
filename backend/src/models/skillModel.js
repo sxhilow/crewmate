@@ -5,10 +5,10 @@ export const searchSkillsService = async(searchItem) => {
 
     let searchResults;
 
-    if(searchResults && searchResults.trim() !== ""){
-        searchResults = await pool.query("SELECT name FROM skills WHERE name ILIKE $1 ORDER BY name LIMIT 10", [`%${searchItem}%`]) 
+    if(searchItem && searchItem.trim() !== ""){
+        searchResults = await pool.query("SELECT id, name FROM skills WHERE name ILIKE $1 ORDER BY name LIMIT 10", [`%${searchItem}%`]) 
     }else{
-        searchResults = await pool.query("SELECT name FROM skills LIMIT 10") 
+        searchResults = await pool.query("SELECT * FROM skills LIMIT 10") 
     }
 
     if(searchResults.rows.length === 0 || !searchResults){
@@ -16,8 +16,8 @@ export const searchSkillsService = async(searchItem) => {
     }
 
     const option = searchResults.rows.map((skill) => ({
-        option: skill.name,
-        result: skill.name
+        label: skill.name,
+        value: skill.id
     }))
 
     return option;

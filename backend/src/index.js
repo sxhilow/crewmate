@@ -4,9 +4,11 @@ import { notFound } from "./middlewares/notFound.js";
 import { errorHandlerMiddleware } from "./middlewares/errorHandlerMiddleware.js";
 import "./config/db.js"
 import authRoutes from "./routes/authRoutes.js"
-import skillsRoutes from './routes/skillsRoutes.js'
+import skillRoutes from './routes/skillRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 import passport from "passport";
 import "./utils/passport.js"
+import { authMiddleware } from "./middlewares/auth.js";
 
 dotenv.config();
 
@@ -15,14 +17,14 @@ const port = process.env.PORT || 3000
 
 // Middlewares
 app.use(express.json());
-
-
 app.use(passport.initialize());
+
 
 
 // Routes
 app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/skills', skillsRoutes)
+app.use('/api/v1/skill', skillRoutes)
+app.use('/api/v1/user', authMiddleware, userRoutes)
 // app.use('/api/v1/workouts', authMiddleware, verifyEmailMiddleware, workoutRoutes)
 // app.use('/api/v1/pr', authMiddleware, verifyEmailMiddleware, prRoutes)
 

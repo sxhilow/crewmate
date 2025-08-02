@@ -7,12 +7,12 @@ export const authMiddleware = async (req, res, next) => {
     if(!authHeader || !authHeader.startsWith('Bearer ')){                            
         throw new UnauthenticatedError('No token provided')
     }
-
+    
+    
     const token = authHeader.split(' ')[1] // after spliting looking for the second value (the token)
-
+    
     try {
-        const decode = await verifyAuthToken(token)
-        
+        const decode = await verifyAuthToken(token)        
         const { userId, name } = decode
         
         req.user = {userId, name} // access userId on all routes with this middleware

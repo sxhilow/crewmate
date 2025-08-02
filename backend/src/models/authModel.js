@@ -13,7 +13,8 @@ export const meService = async(userId) => {
 
     return {
         username: user.username,
-        name: user.name
+        name: user.name,
+        is_profile_complete: user.is_profile_complete
     }
 }
 
@@ -28,8 +29,8 @@ export const authService = async ({email, name, provider}) => {
             user = createUser.rows[0];
         }
 
-        const token = createAuthToken({userId: user.id, name: user.name})
-
+        const token = createAuthToken({userId: user.id, username: user.username})
+        console.log(token);
         return {token, user}
     } catch (error) {
         console.error("authService Error", error)
