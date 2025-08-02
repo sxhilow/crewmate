@@ -4,6 +4,7 @@ import { notFound } from "./middlewares/notFound.js";
 import { errorHandlerMiddleware } from "./middlewares/errorHandlerMiddleware.js";
 import "./config/db.js"
 import authRoutes from "./routes/authRoutes.js"
+import skillsRoutes from './routes/skillsRoutes.js'
 import passport from "passport";
 import "./utils/passport.js"
 
@@ -21,6 +22,7 @@ app.use(passport.initialize());
 
 // Routes
 app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/skills', skillsRoutes)
 // app.use('/api/v1/workouts', authMiddleware, verifyEmailMiddleware, workoutRoutes)
 // app.use('/api/v1/pr', authMiddleware, verifyEmailMiddleware, prRoutes)
 
