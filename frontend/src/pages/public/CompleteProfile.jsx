@@ -22,12 +22,16 @@ const CompleteProfile = () => {
     })
 
     useEffect(() => {
-        if(user){
+        
+        if(user && !user?.is_profile_complete){
             setUserData({
                 username: user.username,
                 name: user.name,
             })
+        }else{
+            navigate('/dashboard')
         }
+
     }, [user])
 
     const loadOptions = async (inputValue) => {
@@ -60,7 +64,7 @@ const CompleteProfile = () => {
 
   return (
     userLoading ? (
-        <div>Loading...</div>
+        <div className='w-full h-screen text-desktop-h2 font-bold flex justify-center items-center'>Loading...</div>
     ) : (
          <div className='w-full h-full'>
             <div className='p-5'>
