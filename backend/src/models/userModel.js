@@ -41,6 +41,14 @@ export const getUserService = async (userId) => {
 
     
     const skills = skillsResult.rows.map(row => row.name)
+
+    const projectsResult = await pool.query('SELECT * FROM projects WHERE user_id = $1', [userId])
+
+    const project = projectsResult.rows.map(row => ({
+        title: row.title,
+        tagline: row.tagline,
+        stage: row.stage
+    }))
     
-    return {user, skills}
+    return {user, skills, project}
 } 
