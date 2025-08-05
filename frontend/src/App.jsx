@@ -6,6 +6,7 @@ import {
   AuthRedirect, 
   CompleteProfile
 } from "./pages"
+import ProtectedLayout from "./layouts/ProtectedLayout"
 const router = createBrowserRouter([
   {
     element: <PublicLayout/>,
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
         element: <CompleteProfile/>
       },
       {
-        element: <></>,
+        element: <ProtectedLayout/>,
         children: [
           {
             path: '/dashboard',
