@@ -7,7 +7,7 @@ CREATE TABLE users (
   bio TEXT,
   about TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW().
+  updated_at TIMESTAMP DEFAULT NOW(),
   is_profile_complete BOOLEAN DEFAULT false
 );
 

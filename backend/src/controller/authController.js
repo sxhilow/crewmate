@@ -4,13 +4,9 @@ import { BadRequestError } from "../errors/bad-request.js";
 
 export const me = async(req, res) => {
 
-    if(!req.body || !req.body.id){
-        throw new BadRequestError("Id is required")
-    }
+    const { userId } = req.user;
 
-    const { id } = req.body;
-
-    const user = await meService(id)
+    const user = await meService(userId)
     res.status(StatusCodes.OK).json(user)
 }
 

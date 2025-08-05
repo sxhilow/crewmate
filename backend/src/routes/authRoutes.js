@@ -1,10 +1,11 @@
 import express from "express"
 import passport from "passport";
 import { me } from "../controller/authController.js";
+import { authMiddleware } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.get("/me", me)
+router.get("/me", authMiddleware, me)
 
 router.get("/google", 
   
@@ -22,7 +23,7 @@ router.get("/google/callback",
 
     function(req, res){
         const { token } = req.user;
-        res.redirect('/')
+        res.redirect(`http://localhost:5173/auth-redirect?token=${token}`)
     }
 
 )
@@ -36,7 +37,7 @@ router.get('/github/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     const { token } = req.user;
-    res.redirect('/');
+    res.redirect(`http://localhost:5173/auth-redirect?token=${token}`)
   }
 );
 

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { notFound } from "./middlewares/notFound.js";
 import { errorHandlerMiddleware } from "./middlewares/errorHandlerMiddleware.js";
 import "./config/db.js"
+import cors from "cors"
 import authRoutes from "./routes/authRoutes.js"
 import skillRoutes from './routes/skillRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -17,6 +18,18 @@ const port = process.env.PORT || 3000
 
 // Middlewares
 app.use(express.json());
+const allowedOrigins = [
+  'http://localhost:5173', // for local development
+  "https://accounts.google.com/"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Allows cookies and authorization headers
+}));
+
 app.use(passport.initialize());
 
 

@@ -19,7 +19,7 @@ export const completeProfileService = async (userId, username, name, skills) => 
     await pool.query("UPDATE users SET username=$1, name=$2, is_profile_complete=true WHERE id=$3", [username, name, userId])
 
     const userSkills = skills.map(skill => (
-        pool.query("INSERT INTO user_skills (user_id, skill_id) VALUES($1, $2) ON CONFLICT DO NOTHING", [userId, skill.value])
+        pool.query("INSERT INTO user_skills (user_id, skill_id) VALUES($1, $2) ON CONFLICT DO NOTHING", [userId, skill])
     ))
 
     await Promise.all(userSkills)
