@@ -6,7 +6,7 @@ export const checkUsernameService = async (username) => {
     const user = result.rows[0]
 
     if(user){
-        throw new BadRequestError("Username is taken")
+        throw new BadRequestError("Username is not available")
     }
 
     return {msg: "Available"}
@@ -52,3 +52,19 @@ export const getUserService = async (userId) => {
     
     return {user, skills, project}
 } 
+
+export const updateUserProfileService = async (userId, username, name, bio) => {
+    
+    const result = await pool.query("SELECT * FROM users WHERE id=$1", [userId])
+    const user = result.rows[0]
+
+    if(!user){
+        throw new BadRequestError("User dose not exists")
+    }
+
+    await checkUsernameService(username)
+
+    await pool.query("UPDATE users SET username=$1, name=$2, bio=$3, updated_at = NOW() WHERE id=$4", [username, name, bio, userId]);
+
+    return {msg: "updated"}
+}
