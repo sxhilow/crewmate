@@ -23,5 +23,24 @@ export const completeProfileService = async (userId, username, name, skills) => 
     ))
 
     await Promise.all(userSkills)
-
 }
+
+export const getUserService = async (userId) => {
+    
+    const result = await pool.query("SELECT * FROM users WHERE id=$1", [userId])
+    const user = result.rows[0]
+
+    if(!user){
+        throw BadRequestError("User dose not exist")
+    }
+
+    const skillsResult = await pool.query(`SELECT s.name 
+                                            FROM skills s 
+                                            INNER JOIN user_skills us ON us.skill_id = s.id
+                                            WHERE us.user_id = $1`, [userId])
+
+    
+    const skills = skillsResult.rows.map(row => row.name)
+    
+    return {user, skills}
+} 
