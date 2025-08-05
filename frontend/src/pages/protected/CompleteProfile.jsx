@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Logo} from "../../assets/"
+import {Logo} from "../../assets"
 import { Button, FormField } from '../../components'
 import AsyncSelect from 'react-select/async';
 import { searchSkills } from '../../controllers/skills';

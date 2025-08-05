@@ -11,8 +11,8 @@ const ProtectedRoutes = () => {
 
     useEffect(() => {
       if(!token){
-        navigate('/')
         setAuthModal('login')
+        navigate('/')        
       }
     }, [navigate, token])
 

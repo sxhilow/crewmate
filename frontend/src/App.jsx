@@ -21,12 +21,12 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/complete-profile',
-    element: <CompleteProfile/>
-  },
-  {
-    element: <></>, // protected route element
+    element: <ProtectedRoutes/>, // protected route element
     children: [
+      {
+        path: '/complete-profile',
+        element: <CompleteProfile/>
+      },
       {
         element: <></>,
         children: [
