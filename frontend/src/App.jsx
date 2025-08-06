@@ -7,6 +7,8 @@ import {
   CompleteProfile
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
+
+
 const router = createBrowserRouter([
   {
     element: <PublicLayout/>,
@@ -32,9 +34,29 @@ const router = createBrowserRouter([
         element: <ProtectedLayout/>,
         children: [
           {
-            path: '/dashboard',
+            path: `/:username`,
             element: <></>
-          },        
+          },
+          {
+            path: "/settings",
+            element: <></>
+          },
+          {
+            path: '/projects',
+            element: <></>
+          },     
+          {
+            path: '/share-project',
+            element: <></>
+          },    
+          {
+            path: '/inbox',
+            element: <></>
+          }, 
+          {
+            path: '/teams',
+            element: <></>
+          }, 
         ]
       }
     ]
