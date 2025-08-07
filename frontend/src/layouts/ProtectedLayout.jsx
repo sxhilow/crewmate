@@ -4,23 +4,45 @@ import { SideBar } from '../components/'
 import ScrollRestoration from '../utils/ScrollRestoration'
 
 const ProtectedLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isNowMobile = window.innerWidth < 768
+      setIsMobile(isNowMobile)
+
+      if(!isNowMobile){
+        isSidebarOpen(true)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(prev => !prev)
+    if(isMobile){
+      setIsSidebarOpen(prev => !prev)
+    }
   }
 
   return (
-    <div className='bg-white dark:bg-slate-950 min-h-screen '>
+    <div className='min-h-screen '>
       
         <ScrollRestoration/>
 
         {/* Sidebar.jsx*/}
         <div className='lg:flex '>
            
+
           <SideBar 
-          className={`${isSidebarOpen ? 'hidden' : 'block'}`}
-          isopen={isSidebarOpen}  toggleSidebar={toggleSidebar}/>
+            className={`${isMobile && !isSidebarOpen ? "hidden" : "block"}`}
+            isopen={isSidebarOpen}  toggleSidebar={toggleSidebar} isMobile={isMobile}/>
 
           <div className='flex-col w-full'>
 

@@ -6,8 +6,8 @@ import { Button } from '../'
 import { Box, Columns, Layers, Rocket, Settings, User, Users } from '../../assets/icons'
 import { useUser } from '../../context/UserContext'
 
-const SideBar = ({ isopen, toggleSidebar}) => {
-    const {user, userLoading} = useUser()
+const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
+    const {user, } = useUser()
     
     const [username, setUsername] = useState('')
 
@@ -15,14 +15,12 @@ const SideBar = ({ isopen, toggleSidebar}) => {
         if (user) {
             setUsername(user.username)
         }
-    }, [user, userLoading])
+    }, [user])
 
     const navigate = useNavigate()
 
     const handleNavClick = () => {
-        if(window.innerWidth < 768) {
-            toggleSidebar()
-        }
+        toggleSidebar()
     }
 
     const handleLogOut = () => {
@@ -31,7 +29,7 @@ const SideBar = ({ isopen, toggleSidebar}) => {
     }
 
   return (
-    <div className={`w-full md:max-w-3xs lg:border-r border-primary-blue bg-washed-blue min-h-screen flex flex-col justify-between fixed top-0 left-0 z-50 overflow-hidden transition-transform ${isopen ? '-translate-x-0' : '-translate-x-full'} duration-150`}>
+    <div className={`w-full md:max-w-3xs border-primary-blue bg-washed-blue min-h-screen flex flex-col justify-between fixed top-0 left-0 z-50 overflow-hidden transition-transform ${isMobile && isopen ? '-translate-x-full' : '-translate-x-0'} duration-150`}>
 
         <div>
 
@@ -39,7 +37,7 @@ const SideBar = ({ isopen, toggleSidebar}) => {
                 <div className='flex items-center gap-2'>
                     <img src={Logo} alt="Gainshub" className='w-32'/>
                 </div>
-                <Button className='cursor-pointer' onClick={toggleSidebar}>
+                <Button className={`${!isMobile ? "hidden" : "block"} cursor-pointer`} onClick={toggleSidebar}>
                     <img src={Columns} alt="Column" className='w-8'/>
                 </Button>
             </div>

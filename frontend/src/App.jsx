@@ -4,7 +4,8 @@ import ProtectedRoutes from './utils/ProtectedRoutes'
 import { 
   LandingPage, 
   AuthRedirect, 
-  CompleteProfile
+  CompleteProfile,
+  UserProfile
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: `/:username`,
-            element: <></>
+            element: <UserProfile/>
           },
           {
             path: "/settings",
