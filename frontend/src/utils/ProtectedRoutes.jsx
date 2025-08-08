@@ -20,13 +20,7 @@ const ProtectedRoutes = () => {
 
   return(
 
-    token ? (
-      userLoading ? (
-        <div className='text-desktop-h2 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
-      ) : (
-        <Outlet/>
-      )
-    )  : null
+    token ? <Outlet/> : null
 
   ) 
   

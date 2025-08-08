@@ -105,11 +105,11 @@ const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
                         )}
                     </NavLink> 
 
-                    <NavLink to={`/${username}`} onClick={handleNavClick}> 
+                    <NavLink to={`/me/${username}`} onClick={handleNavClick}> 
                         {({isActive}) => (
                             <li className={`${isActive ? "bg-white" : "hover:bg-white"} w-full cursor-pointer transition duration-200 p-1 rounded-lg flex items-center gap-2 my-1`}>
                                 <img src={User} alt="Box" />
-                                <span>Profile</span>                  
+                                <span>@{username}</span>                  
                             </li>
                         )}
                     </NavLink> 

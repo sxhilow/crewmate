@@ -5,6 +5,8 @@ import Users from "./Users.svg"
 import Settings from "./Settings.svg"
 import User from "./User.svg"
 import Columns from "./Columns.svg"
+import Github from "./github.svg"
+import X from "./x.svg"
 
 export {
     Box,
@@ -13,6 +15,8 @@ export {
     Users,
     Settings,
     User,
-    Columns
+    Columns,
+    Github,
+    X
 }
 

@@ -29,7 +29,7 @@ const CompleteProfile = () => {
                 name: user.name,
             })
         }else{
-            navigate('/dashboard')
+            navigate('/projects')
         }
 
     }, [user])

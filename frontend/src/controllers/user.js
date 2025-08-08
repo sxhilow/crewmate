@@ -12,7 +12,7 @@ export const completeProfile = async(userData) => {
 
 export const fetchUserProfile = async () => {
     try {
-        const res = await API.get('/user/me');
+        const res = await API.get('/user/me');        
         return res.data
     } catch (error) {
         console.error("Error: ", error.response?.data || error.message)
