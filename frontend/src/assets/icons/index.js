@@ -7,6 +7,7 @@ import User from "./User.svg"
 import Columns from "./Columns.svg"
 import Github from "./github.svg"
 import X from "./x.svg"
+import Logout from "./Logout.svg"
 
 export {
     Box,
@@ -17,6 +18,7 @@ export {
     User,
     Columns,
     Github,
-    X
+    X,
+    Logout
 }
 

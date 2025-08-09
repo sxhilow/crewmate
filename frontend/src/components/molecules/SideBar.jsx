@@ -3,7 +3,7 @@ import {Logo} from "../../assets"
 import {Link, NavLink, useNavigate} from "react-router-dom"
 import { Activity, Columns2Icon, HomeIcon, LogOutIcon, TrophyIcon } from "lucide-react"
 import { Button } from '../'
-import { Box, Columns, Layers, Rocket, Settings, User, Users } from '../../assets/icons'
+import { Box, Columns, Layers, Logout, Rocket, Settings, User, Users } from '../../assets/icons'
 import { useUser } from '../../context/UserContext'
 
 const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
@@ -94,24 +94,31 @@ const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
         <div>
             <div className='mt-2 p-2'>
 
-                <ul className='text-neutral-8 p-2 md:p-0 font-medium'>
-                    
-                    <NavLink to={'/settings'} onClick={handleNavClick}> 
-                        {({isActive}) => (
-                            <li className={`${isActive ? "bg-white" : "hover:bg-white"} w-full cursor-pointer transition duration-200 p-1 rounded-lg flex items-center gap-2 my-1`}>
-                                <img src={Settings} alt="Box" />
-                                <span>Settings</span>                  
-                            </li>
-                        )}
-                    </NavLink> 
+                <ul className='text-neutral-8 p-2 md:p-0 font-medium text-desktop-p'>
 
-                    <NavLink to={`/me/${username}`} onClick={handleNavClick}> 
+                    <NavLink to={`/me`} onClick={handleNavClick}> 
                         {({isActive}) => (
                             <li className={`${isActive ? "bg-white" : "hover:bg-white"} w-full cursor-pointer transition duration-200 p-1 rounded-lg flex items-center gap-2 my-1`}>
                                 <img src={User} alt="Box" />
                                 <span>@{username}</span>                  
                             </li>
                         )}
+                    </NavLink> 
+                    
+                    <NavLink to={'/my/account'} onClick={handleNavClick}> 
+                        {({isActive}) => (
+                            <li className={`${isActive ? "bg-white" : "hover:bg-white"} w-full cursor-pointer transition duration-200 p-1 rounded-lg flex items-center gap-2 my-1`}>
+                                <img src={Settings} alt="Box" />
+                                <span>My Account</span>                  
+                            </li>
+                        )}
+                    </NavLink> 
+
+                    <NavLink onClick={handleLogOut}> 
+                            <li className={` hover:bg-white w-full cursor-pointer transition duration-200 p-1 rounded-lg flex items-center gap-2 my-1`}>
+                                <img src={Logout} alt="Box" />
+                                <span>Logout</span>                  
+                            </li>                    
                     </NavLink> 
 
                 </ul>

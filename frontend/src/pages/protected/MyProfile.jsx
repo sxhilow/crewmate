@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import Button from '../../components/atoms/Button'
 import { Github, X } from '../../assets/icons'
-import { fetchMe } from '../../controllers/auth'
 import { fetchUserProfile } from '../../controllers/user'
 
-const UserProfile = () => {
+const MyProfile = () => {
   const [userData, setUserData] = useState({})
   const [skills, setSkills] = useState([])
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState()
   
-  console.log(projects);
   
   useEffect(() => {
     const fetchUserData = async () => {
@@ -32,14 +30,12 @@ const UserProfile = () => {
     fetchUserData()
   }, [])
 
-  console.log(projects);
-  
 
   return (
     loading ? (
       <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
     ) : (
-      <div className='max-w-4xl text-neutral-13  mx-auto my-20 flex flex-col justify-center items-center space-y-10'>
+      <div className='max-w-4xl text-neutral-13  mx-auto my-20  flex flex-col justify-center items-center space-y-10'>
       <div className='w-full  mb-10 flex justify-between items-center'>
           <div>
             <div className='flex flex-col -space-y-4'>
@@ -94,11 +90,11 @@ const UserProfile = () => {
       </div>
       <div className='w-full space-y-3'>
         <h2 className='text-desktop-h5 font-bold'>My Skills</h2>
-        <div className='w-full bg-washed-blue rounded-md p-5 flex wrap-break-word gap-4'>
+        <div className='w-full flex flex-wrap  bg-washed-blue rounded-md p-5  gap-4'>
           {
             skills.length > 0 ? (
               skills.map((s) => (
-                <div key={s} className='bg-primary-blue/80 px-2 py-1 min-w-18 text-center font-semibold rounded-lg text-washed-purple'>
+                <div key={s} className='flex justify-center items-center bg-primary-blue/80 px-2 py-1 min-w-18 font-semibold rounded-lg text-washed-purple'>
                   {s}
                 </div>
               ))
@@ -148,4 +144,4 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
+export default MyProfile

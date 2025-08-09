@@ -5,7 +5,8 @@ import {
   LandingPage, 
   AuthRedirect, 
   CompleteProfile,
-  UserProfile
+  MyProfile,
+  MyAccount
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 
@@ -35,11 +36,19 @@ const router = createBrowserRouter([
         element: <ProtectedLayout/>,
         children: [
           {
-            path: `/me/:username`,
-            element: <UserProfile/>
+            path: `/me`,
+            element: <MyProfile/>
           },
           {
-            path: "/settings",
+            path: "/my/account",
+            element: <MyAccount/>
+          },
+          {
+            path: "/my/account/settings",
+            element: <></>
+          },
+          {
+            path: "/my/account/edit",
             element: <></>
           },
           {
