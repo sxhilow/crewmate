@@ -3,7 +3,7 @@ import Login from "./public/Login";
 import AuthRedirect from "./public/AuthRedirect";
 import CompleteProfile from "./protected/CompleteProfile";
 import MyProfile from "./protected/MyProfile";
-import MyAccount from "./protected/MyAccount";
+import EditProfile from "./protected/EditProfile";
 
 export {
     LandingPage,
@@ -11,5 +11,5 @@ export {
     AuthRedirect,
     CompleteProfile,
     MyProfile,
-    MyAccount
+    EditProfile
 }

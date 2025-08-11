@@ -6,9 +6,10 @@ import {
   AuthRedirect, 
   CompleteProfile,
   MyProfile,
-  MyAccount
+  EditProfile
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
+import MyAccountLayout from "./layouts/MyAccountLayout"
 
 
 const router = createBrowserRouter([
@@ -40,16 +41,18 @@ const router = createBrowserRouter([
             element: <MyProfile/>
           },
           {
-            path: "/my/account",
-            element: <MyAccount/>
-          },
-          {
-            path: "/my/account/settings",
-            element: <></>
-          },
-          {
-            path: "/my/account/edit",
-            element: <></>
+            path: '/my/account',
+            element: <MyAccountLayout/>,
+            children: [
+              {
+                index: true,
+                element: <EditProfile/>
+              },
+              {
+                path: "info",
+                element: <></>
+              },
+            ]
           },
           {
             path: '/projects',

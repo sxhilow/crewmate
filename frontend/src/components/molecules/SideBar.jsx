@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {Logo} from "../../assets"
 import {Link, NavLink, useNavigate} from "react-router-dom"
-import { Activity, Columns2Icon, HomeIcon, LogOutIcon, TrophyIcon } from "lucide-react"
 import { Button } from '../'
 import { Box, Columns, Layers, Logout, Rocket, Settings, User, Users } from '../../assets/icons'
 import { useUser } from '../../context/UserContext'
 
 const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
-    const {user, } = useUser()
+    const { user } = useUser()
     
     const [username, setUsername] = useState('')
 
