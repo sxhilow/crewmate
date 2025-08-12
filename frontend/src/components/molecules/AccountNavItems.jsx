@@ -7,7 +7,7 @@ const AccountNavItems = () => {
         <h1 className='text-desktop-h4 font-bold'>My Account</h1>
 
         <ul className='py-8'>
-          <NavLink to={'/my/account'}>
+          <NavLink to={'/my/account'} end>
             {({isActive}) => (
               <li className={`${isActive ? "bg-washed-blue/60" : "hover:bg-washed-blue/60"} bg-washed-blue p-5 rounded-xl transtition duration-200 my-4`}>
                 <span   className='text-neutral-10 text-desktop-p '>Profile</span>

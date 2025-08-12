@@ -93,9 +93,9 @@ const MyProfile = () => {
         <div className='w-full flex flex-wrap  bg-washed-blue rounded-md p-5  gap-4'>
           {
             skills.length > 0 ? (
-              skills.map((s) => (
-                <div key={s} className='flex justify-center items-center bg-primary-blue/80 px-2 py-1 min-w-18 font-semibold rounded-lg text-washed-purple'>
-                  {s}
+              skills.map(({label}) => (
+                <div key={label} className='flex justify-center items-center bg-primary-blue/80 px-2 py-1 min-w-18 font-semibold rounded-lg text-washed-purple'>
+                  {label}
                 </div>
               ))
             ) : (

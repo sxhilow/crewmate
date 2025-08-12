@@ -4,6 +4,7 @@ import AuthRedirect from "./public/AuthRedirect";
 import CompleteProfile from "./protected/CompleteProfile";
 import MyProfile from "./protected/MyProfile";
 import EditProfile from "./protected/EditProfile";
+import AccountInfo from "./protected/AccountInfo";
 
 export {
     LandingPage,
@@ -11,5 +12,6 @@ export {
     AuthRedirect,
     CompleteProfile,
     MyProfile,
-    EditProfile
+    EditProfile,
+    AccountInfo
 }

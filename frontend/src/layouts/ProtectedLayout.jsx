@@ -52,7 +52,7 @@ const ProtectedLayout = () => {
 
               <div className='flex-col w-full'>
 
-                <main className={`flex-1 flex-grow overflow-auto ${isSidebarOpen ? "md:pl-64" : "pl-0"} ${isMobile ? 'px-4' : 'px-2'}`}>
+                <main className={`flex-1 flex-grow overflow-auto ${isSidebarOpen ? "md:pl-64" : "pl-0"} ${isMobile ? 'px-4' : ''}`}>
                   <Outlet/>
                 </main>
 

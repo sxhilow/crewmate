@@ -6,7 +6,8 @@ import {
   AuthRedirect, 
   CompleteProfile,
   MyProfile,
-  EditProfile
+  EditProfile,
+  AccountInfo
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
@@ -40,18 +41,18 @@ const router = createBrowserRouter([
             path: `/me`,
             element: <MyProfile/>
           },
-          {
-            path: '/my/account',
+          {            
             element: <MyAccountLayout/>,
             children: [
               {
-                index: true,
+                path: '/my/account',
                 element: <EditProfile/>
               },
               {
-                path: "info",
-                element: <></>
+                path: "/my/account/info",
+                element: <AccountInfo/>
               },
+              {/* Could have a deactivate account */}
             ]
           },
           {

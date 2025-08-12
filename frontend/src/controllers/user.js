@@ -22,7 +22,7 @@ export const fetchUserProfile = async () => {
 
 export const editUserProfile = async (userData) => {
     try {
-        const res = await API.patch("/user/edit-profile", userData)
+        const res = await API.patch("/user/edit-profile", {userData})
         return res.data
     } catch (error) {
         console.error("Error: ", error.response?.data || error.message)

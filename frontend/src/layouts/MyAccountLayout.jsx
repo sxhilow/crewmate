@@ -6,11 +6,11 @@ const MyAccountLayout = () => {
   return (
     <div className='flex min-h-screen'>
       
-      <div className='flex w-[50%]'>
+      <div className='flex-1'>
         <AccountNavItems/>
       </div>
 
-      <div className='border-l border-primary-blue'>
+      <div className='flex-1 border-l border-primary-blue'>
         <Outlet/>
       </div>
       
