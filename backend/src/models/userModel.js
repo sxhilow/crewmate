@@ -34,13 +34,13 @@ export const getUserService = async (userId) => {
         throw BadRequestError("User dose not exist")
     }
 
-    const skillsResult = await pool.query(`SELECT s.name 
+    const skillsResult = await pool.query(`SELECT s.name, s.id
                                             FROM skills s 
                                             INNER JOIN user_skills us ON us.skill_id = s.id
                                             WHERE us.user_id = $1`, [userId])
 
     
-    const skills = skillsResult.rows.map(row => row.name)
+    const skills = skillsResult.rows.map(row => ({label: row.name, value: row.id}))
 
     const projectsResult = await pool.query('SELECT * FROM projects WHERE user_id = $1', [userId])
 
@@ -53,7 +53,9 @@ export const getUserService = async (userId) => {
     return {user, skills, project}
 } 
 
-export const updateUserProfileService = async (userId, username, name, bio) => {
+export const updateUserProfileService = async (userData, userId) => {
+
+    const {name, bio, username, github_url, x_url, skills = []} = userData;
     
     const result = await pool.query("SELECT * FROM users WHERE id=$1", [userId])
     const user = result.rows[0]
@@ -62,9 +64,26 @@ export const updateUserProfileService = async (userId, username, name, bio) => {
         throw new BadRequestError("User dose not exists")
     }
 
-    await checkUsernameService(username)
+    if(username && username != user.username){
+        checkUsernameService(username)
+    }
 
-    await pool.query("UPDATE users SET username=$1, name=$2, bio=$3, updated_at = NOW() WHERE id=$4", [username, name, bio, userId]);
+    await pool.query("UPDATE users SET username=$1, name=$2, bio=$3, github_url=$4, x_url=$5, updated_at = NOW() WHERE id=$6", [username, name, bio, github_url, x_url, userId]);
+
+    const skillIds = skills.map(skill => skill.value);
+    
+    if(skillIds.length > 0){
+        await pool.query("DELETE FROM user_skills WHERE user_id=$1", [userId])
+
+        const insertValues = skills
+        .map((_, index) => `($1, $${index + 2})`)
+        .join(', ');
+        console.log(insertValues);
+        
+        await pool.query(`INSERT INTO user_skills (user_id, skill_id) VALUES ${insertValues}`, [userId, ...skillIds])
+    }
+ 
+    
 
     return {msg: "updated"}
 }
