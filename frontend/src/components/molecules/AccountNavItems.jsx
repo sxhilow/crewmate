@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const AccountNavItems = () => {
   return (
-    <div className='px-10 py-5 flex flex-col w-full'>
+    <div className='px-5 lg:px-10 py-5 flex flex-col w-full'>
         <h1 className='text-desktop-h4 font-bold'>My Account</h1>
 
         <ul className='py-8'>

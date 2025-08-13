@@ -45,7 +45,7 @@ const AccountInfo = () => {
 
   return (
     loading ? (
-      <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
+      <div className='text-desktop-h5 w-full min-h-screen flex justify-center items-center font-bold'>Loading...</div>
     ) : (
        <div className='flex flex-col min-h-screen'>
 

@@ -45,7 +45,7 @@ const MyProfile = () => {
                 
                 {
                   userData.github_url && (
-                    <Button to={'/'}>
+                    <Button to={userData.github_url}>
                       <img src={Github} alt="Github" className='w-6'/>
                     </Button>
                   )
@@ -53,7 +53,7 @@ const MyProfile = () => {
 
                 {
                   userData.x_url && (
-                    <Button to={'/'}>
+                    <Button to={userData.x_url}>
                       <img src={X} alt="Twitter" className='w-6' />
                     </Button>
                   )
@@ -66,7 +66,7 @@ const MyProfile = () => {
           
           </div>
           <div>
-            <Button to={'/me/edit-profile'} className='bg-washed-blue px-4 py-2 rounded-lg text-desktop-h5 font-semibold border border-primary-blue'>
+            <Button to={'/my/account'} className='bg-washed-blue px-4 py-2 rounded-lg text-desktop-h5 font-semibold border border-primary-blue'>
               Edit Profile
             </Button>
           </div>
