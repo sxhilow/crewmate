@@ -8,5 +8,9 @@ router.get('/', getAllProjects)
 router.get('/:id', getProject)
 router.post('/add-project', authMiddleware, addProject)
 router.delete('/delete-project/:id', authMiddleware, deleteProject)
+// router.get('/:id/requests')
+// router.post('/:id/request')
+// router.patch('/:id/request')
+
 
 export default router

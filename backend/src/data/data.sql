@@ -31,7 +31,8 @@ CREATE TABLE projects (
 
 CREATE TABLE teams (
   id SERIAL PRIMARY KEY,
-  project_id INT REFERENCES projects(id) ON DELETE CASCADE
+  project_id INT REFERENCES projects(id) ON DELETE CASCADE,
+  name TEXT NOT NULL;
 );
 
 CREATE TABLE messages (
