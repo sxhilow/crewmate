@@ -7,6 +7,7 @@ import cors from "cors"
 import authRoutes from "./routes/authRoutes.js"
 import skillRoutes from './routes/skillRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import projectRoutes from './routes/projectRoutes.js'
 import passport from "passport";
 import "./utils/passport.js"
 import { authMiddleware } from "./middlewares/auth.js";
@@ -38,6 +39,7 @@ app.use(passport.initialize());
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/skill', skillRoutes)
 app.use('/api/v1/user', authMiddleware, userRoutes)
+app.use('/api/v1/project', projectRoutes)
 // app.use('/api/v1/workouts', authMiddleware, verifyEmailMiddleware, workoutRoutes)
 // app.use('/api/v1/pr', authMiddleware, verifyEmailMiddleware, prRoutes)
 
