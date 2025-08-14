@@ -21,7 +21,7 @@ CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) ON DELETE CASCADE, -- project owner
   title VARCHAR(20) NOT NULL,
-  tagline VARCHAR(60),
+  tagline VARCHAR(60) NOT NULL,
   description TEXT NOT NULL,
   stage VARCHAR(10),                -- "Idea", "In Progress", "Complete"
   logo_url TEXT, --question

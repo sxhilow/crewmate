@@ -24,8 +24,7 @@ export const getUser = async (req, res) => {
 
 export const updateUserProfile = async(req, res) => {
     const {userId} = req.user;
-    const {userData} = req.body;    
-    console.log(userData);    
+    const {userData} = req.body;      
     const update = await updateUserProfileService(userData, userId);
     res.status(StatusCodes.OK).json(update)
 }
