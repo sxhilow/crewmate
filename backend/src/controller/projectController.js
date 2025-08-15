@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes"
-import { addProjectService, deleteProjectService, getAllProjectsService, getProjectService } from "../models/projectModel.js"
+import { addProjectService, deleteProjectService, getAllProjectsService, getProjectService, sendProjectRequestService } from "../models/projectModel.js"
 import { BadRequestError } from '../errors/index.js';
 
 
@@ -23,5 +23,13 @@ export const deleteProject = async (req, res) => {
     const {userId} = req.user;
     const {id} = req.params;
     const result = await deleteProjectService(id, userId)
+    res.status(StatusCodes.OK).json(result)
+}
+
+export const sendProjectRequest = async (req, res) => {
+    const {userId} = req.user;
+    const {id} = req.params;
+
+    const result = await sendProjectRequestService(id, userId);
     res.status(StatusCodes.OK).json(result)
 }

@@ -34,7 +34,6 @@ export const addProjectService = async (userId, projectData) => {
     const project = await pool.query("INSERT INTO projects (user_id, title, tagline, description, stage, logo_url, github_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [userId, title, tagline, description, stage, logo_url, github_url]);
 
     const projectId = project.rows[0].id;
-    console.log(projectId);
     
     const skillIds = skills.map(skill => skill.value);
     
@@ -78,3 +77,40 @@ export const deleteProjectService = async (projectId, userId) => {
 
     return {msg: "Deleted successfully"}
 }
+
+export const sendProjectRequestService = async (projectId, userId) => {
+
+    let ownerId = await pool.query("SELECT user_id FROM projects WHERE id=$1", [projectId])
+
+    if(!ownerId.rows || ownerId.rows.length === 0){
+        throw new NotFoundError("Project not found")
+    }
+
+    ownerId = ownerId.rows[0].user_id
+    
+    if(userId === ownerId){
+        throw new BadRequestError("Cannot send request to yourself")
+    }
+
+    const existingReq = await pool.query("SELECT * FROM project_requests WHERE project_id=$1 AND user_id=$2", [projectId, userId]);
+
+    if(existingReq.rows.length > 0){
+        throw new BadRequestError("Request already sent");
+    }
+
+    const memberCheck = await pool.query("SELECT * FROM team_members WHERE user_id=$1", [userId]);
+
+    if(memberCheck.rows.length > 0){
+        throw new BadRequestError("You are already a part of this team")
+    }
+    
+    const projectReq = await pool.query("INSERT INTO project_requests (project_id, user_id, status) VALUES ($1, $2, $3) RETURNING *",[projectId, userId, 'pending']);  
+    
+
+    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen) VALUES ($1, $2, $3, $4) RETURNING *", [ownerId, userId, 'join_request', false]);
+
+    return {
+        project_request: projectReq.rows[0],
+        notification: notification.rows[0]
+    }
+} 
