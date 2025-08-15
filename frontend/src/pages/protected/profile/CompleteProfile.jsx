@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {Logo} from "../../assets"
-import { Button, FormField } from '../../components'
+import {Logo} from "../../../assets"
+import { Button, FormField } from '../../../components'
 import AsyncSelect from 'react-select/async';
-import { searchSkills } from '../../controllers/skills';
-import { completeProfile } from '../../controllers/user';
+import { searchSkills } from '../../../controllers/skills';
+import { completeProfile } from '../../../controllers/user';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../../../context/UserContext';
 
 
 const CompleteProfile = () => {

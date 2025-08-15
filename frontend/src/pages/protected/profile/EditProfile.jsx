@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import { FormField } from '../../components'
-import { searchSkills } from '../../controllers/skills'
-import { editUserProfile, fetchUserProfile } from '../../controllers/user'
+import { FormField } from '../../../components'
+import { searchSkills } from '../../../controllers/skills'
+import { editUserProfile, fetchUserProfile } from '../../../controllers/user'
 import AsyncSelect from 'react-select/async'
 import { useNavigate } from 'react-router-dom'
-import {Button} from '../../components'
+import {Button} from '../../../components'
 
 const EditProfile = () => {
 

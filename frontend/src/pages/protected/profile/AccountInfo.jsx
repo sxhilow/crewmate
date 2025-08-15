@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {fetchUserProfile} from "../../controllers/user"
+import {fetchUserProfile} from "../../../controllers/user"
 
 const AccountInfo = () => {
 

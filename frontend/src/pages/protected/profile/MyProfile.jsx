@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import Button from '../../components/atoms/Button'
-import { Github, X } from '../../assets/icons'
-import { fetchUserProfile } from '../../controllers/user'
+import Button from '../../../components/atoms/Button'
+import { Github, X } from '../../../assets/icons'
+import { fetchUserProfile } from '../../../controllers/user'
 
 const MyProfile = () => {
   const [userData, setUserData] = useState({})
