@@ -5,6 +5,8 @@ import CompleteProfile from "./protected/profile/CompleteProfile";
 import MyProfile from "./protected/profile/MyProfile";
 import EditProfile from "./protected/profile/EditProfile";
 import AccountInfo from "./protected/profile/AccountInfo";
+import ProjectsDash from "./protected/projects/ProjectsDash";
+import AddProject from "./protected/projects/AddProject";
 
 export {
     LandingPage,
@@ -13,5 +15,7 @@ export {
     CompleteProfile,
     MyProfile,
     EditProfile,
-    AccountInfo
+    AccountInfo,
+    ProjectsDash,
+    AddProject
 }

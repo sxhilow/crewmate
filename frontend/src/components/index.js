@@ -4,6 +4,7 @@ import Pill from "./atoms/Pill";
 import FormField from "./atoms/FormField";
 import SideBar from "./molecules/SideBar";
 import AccountNavItems from "./molecules/AccountNavItems";
+import ProjectCard from "./molecules/ProjectCard";
 
 export {
     Header,
@@ -11,5 +12,6 @@ export {
     Pill,
     FormField,
     SideBar,
-    AccountNavItems
+    AccountNavItems,
+    ProjectCard
 }

@@ -2,7 +2,7 @@ import API from "./axios";
 
 export const getAllprojects = async (limit, offset) => {
     try {
-        const res = await API.get(`/project?limit=${limit}&offset={offset}`)
+        const res = await API.get(`/project?limit=${limit}&offset=${offset}`)
         return res.data
     } catch (error) {
         console.error("Error: ", error.response?.data || error.message)
@@ -22,6 +22,8 @@ export const getProject = async (projectId) => {
 
 export const shareProject = async (projectData) => {
     try {
+        console.log(projectData);
+        
         const res = await API.post(`/project/add-project`, {projectData})
         return res.data
     } catch (error) {

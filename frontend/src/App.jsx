@@ -7,7 +7,9 @@ import {
   CompleteProfile,
   MyProfile,
   EditProfile,
-  AccountInfo
+  AccountInfo,
+  ProjectsDash,
+  AddProject
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
@@ -57,11 +59,11 @@ const router = createBrowserRouter([
           },
           {
             path: '/projects',
-            element: <></>
+            element: <ProjectsDash/>
           },     
           {
             path: '/share-project',
-            element: <></>
+            element: <AddProject/>
           },    
           {
             path: '/inbox',
