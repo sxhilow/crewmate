@@ -1,5 +1,5 @@
 import pool from "../config/db.js"
-import { BadRequestError, NotFoundError } from '../errors/index.js';
+import { BadRequestError, NotFoundError, UnauthenticatedError } from '../errors/index.js';
 
 
 
@@ -114,3 +114,52 @@ export const sendProjectRequestService = async (projectId, userId) => {
         notification: notification.rows[0]
     }
 } 
+
+export const respondProjectRequestService = async (projectId, requestId, userId, decision) => {
+
+    let senderId = await pool.query("SELECT user_id FROM project_requests WHERE id=$1", [requestId])
+    senderId = senderId.rows[0].user_id;    
+    if(!senderId) throw new BadRequestError("Request dose not exists")
+    
+    const requestCheck = await pool.query("SELECT * FROM project_requests WHERE id=$1", [requestId])
+    if(!requestCheck.rows.length) throw new BadRequestError("Join request not found")
+
+    const ownershipCheck = await pool.query("SELECT * FROM projects WHERE id=$1", [projectId])
+    const ownerId = ownershipCheck.rows[0].user_id
+    console.log(ownerId);
+    
+    if(ownerId !== userId) throw new UnauthenticatedError("Not authorized to respond to this request")
+
+    const response = await pool.query("UPDATE project_requests SET status=$1 WHERE id=$2 RETURNING *", [decision, requestId]);
+
+
+    const memberCheck = await pool.query("SELECT * FROM team_members WHERE user_id=$1", [senderId]);
+    if(memberCheck.rows.length) throw new BadRequestError("Already a team member")
+        
+
+    const type = decision === 'accepted' ? 'join_request_accepted' : 'join_request_rejected';
+
+    if(decision === 'accepted'){
+        await pool.query("INSERT INTO team_members (team_id, user_id) VALUES ((SELECT id FROM teams WHERE project_id=$1), $2)", [projectId, senderId])
+    }
+
+    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen) VALUES ($1, $2, $3, $4) RETURNING *", [senderId, userId, type, false])
+
+    return {
+        response: response.rows[0],
+        notification: notification.rows[0]
+    }
+}
+
+export const getProjectRequestsService = async (userId) => {
+    const requests = await pool.query(`SELECT pr.* 
+                                        FROM project_requests pr 
+                                        JOIN projects p ON pr.project_id = p.id
+                                        WHERE p.user_id=$1`, [userId]);
+    
+    if(!requests.rows.length) throw new NotFoundError("No requests found")
+
+    return {
+        requests: requests.rows
+    }
+}
