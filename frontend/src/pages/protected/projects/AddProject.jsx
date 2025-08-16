@@ -43,7 +43,7 @@ const AddProject = () => {
     }
 
   return (
-    <div className='p-5'>
+    <div className='p-5 w-full min-h-screen'>
         <h1 className='text-desktop-h4 font-bold'>Share Projects</h1>
         <p className='text-desktop-p text-neutral-13'>Need a team member? share your project/idea and form a team</p> 
 
@@ -65,7 +65,7 @@ const AddProject = () => {
                   )
               }
 
-            <form onSubmit={handleAddProject}>
+            <form onSubmit={handleAddProject} className='w-full h-full'>
                 <div className='flex items-center gap-5'>
                     <FormField label={'Project Name'} className={'flex-1'} labelClassName='text-neutral-13' placeholder={'Crewmate'} value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} required/>
                     <div className="flex-1">
@@ -93,6 +93,7 @@ const AddProject = () => {
                     <FormField label={'Github URL'}  labelClassName='text-neutral-13' type={"url"} placeholder={'https://github.com/sahilow/crewmate'} value={formData.github_url} onChange={(e) => setFormData({...formData, github_url: e.target.value})} required/>
 
                 </div>
+                
                 <div className='mb-5'>
 
                     <label className="text-neutral-13">
@@ -119,11 +120,12 @@ const AddProject = () => {
                     />
                 </div>
 
-                <div type="submit" className='flex justify-end items-center'>
-                    <Button className='bg-washed-blue border border-primary-blue px-4 py-2 rounded-lg'>
+                <div type="submit" className='flex justify-end items-center max-sm:mt-14'>
+                    <Button className='bg-washed-blue border border-primary-blue px-4 py-2 rounded-lg max-sm:w-full'>
                         {loading ? 'Sharing...' : 'Share Project'}
                     </Button>
                 </div>
+
             </form>
         
         </div> 

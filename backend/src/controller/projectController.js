@@ -16,6 +16,8 @@ export const getProject = async (req, res) => {
 export const addProject = async (req, res) => {
     const { userId } = req.user;
     const { projectData } = req.body;
+    console.log(projectData);
+    
     const result = await addProjectService(userId, projectData)
     res.status(StatusCodes.OK).json(result)
 }

@@ -6,7 +6,7 @@ import { BadRequestError, NotFoundError, UnauthenticatedError } from '../errors/
 
 export const getAllProjectsService = async (limit, offset) => {
 
-    const projects = await pool.query("SELECT id, title, tagline FROM projects ORDER BY created_at DESC LIMIT $1 OFFSET $2", [limit, offset])
+    const projects = await pool.query("SELECT id, title, tagline, logo_url FROM projects ORDER BY created_at DESC LIMIT $1 OFFSET $2", [limit, offset])
     
     return {projects: projects.rows}
     
@@ -24,7 +24,8 @@ export const getProjectService = async (projectId) => {
 
 export const addProjectService = async (userId, projectData) => {
     const {title, tagline, description, stage, logo_url, github_url, skills = []} = projectData;
-
+    console.log(title, tagline, description, stage, logo_url, github_url, skills);
+    
     if(!title || !description || !tagline || !stage){
         throw new BadRequestError("Title, Description, stage and tagline are required")
     }
