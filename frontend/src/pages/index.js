@@ -8,7 +8,7 @@ import AccountInfo from "./protected/profile/AccountInfo";
 import ProjectsDash from "./protected/projects/ProjectsDash";
 import AddProject from "./protected/projects/AddProject";
 import ProjectView from "./protected/projects/ProjectView";
-
+import Inbox from "./protected/projects/Inbox";
 export {
     LandingPage,
     Login,
@@ -19,5 +19,6 @@ export {
     AccountInfo,
     ProjectsDash,
     AddProject,
-    ProjectView
+    ProjectView,
+    Inbox
 }

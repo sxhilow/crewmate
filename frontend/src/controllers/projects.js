@@ -52,9 +52,10 @@ export const sendRequest = async (projectId) => {
     }
 }
 
-export const respondToRequest = async (projectId) => {
+export const respondToRequest = async (projectId, decisionData) => {
+    console.log(projectId, decisionData);    
     try {
-        const res = await API.patch(`/project/${projectId}/request`)
+        const res = await API.patch(`/project/${projectId}/request`, decisionData)
         return res.data
     } catch (error) {
         console.error("Error: ", error.response?.data || error.message)

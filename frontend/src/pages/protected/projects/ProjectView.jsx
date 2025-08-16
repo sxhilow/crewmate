@@ -4,10 +4,13 @@ import { getProject } from '../../../controllers/projects'
 import {Button} from '../../../components'
 import { Right } from '../../../assets/icons'
 import { sendRequest } from '../../../controllers/projects'
+import { useUser } from '../../../context/UserContext'
 
 const ProjectView = () => {
 
     const {id} = useParams()
+    const {user} = useUser()
+    const [userId, setUserId] = useState()
     const [projectData, setProjectData] = useState({})
     const [skills, setSkills] = useState([])
     const [loading, setLoading] = useState(true)
@@ -40,6 +43,12 @@ const ProjectView = () => {
         fetchProject();
     }, [])
 
+    useEffect(() => {
+      if(user){
+          setUserId(user.id)
+      }
+    }, [])
+
     const handleCollab = async (id) => {
         setBtnLoading(true)
         setError(null)
@@ -47,8 +56,6 @@ const ProjectView = () => {
         try {
           await sendRequest(id)
           setSuccess('Request Sent')
-        setS
-
         } catch (error) {
           console.error(error)
           setError(error.response.data.msg)   
@@ -140,7 +147,7 @@ const ProjectView = () => {
         </div>
       </div>
       <div className='flex justify-start items-center'>
-        <Button className='flex justify-center items-center gap-2 px-4 py-2 rounded-lg text-desktop-h5 border border-primary-blue min-w-32' onClick={() => handleCollab(id)}>
+        <Button className='flex justify-center items-center gap-2 px-4 py-2 rounded-lg text-desktop-h5 border border-primary-blue min-w-32 disabled:cursor-not-allowed disabled:opacity-50' onClick={() => handleCollab(id)} disabled={userId === projectData.user_id}>
           {btnLoading ? (
                 "Sending"
           ) : (

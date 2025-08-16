@@ -7,7 +7,7 @@ const ProjectsDash = () => {
   const [offset, setOffset] = useState(0)
   const [projects, setProjects] = useState([])
   const [error, setError] = useState()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [btnLoading, setBtnLoading] = useState(false)
 
   const LIMIT = 6;
@@ -19,7 +19,6 @@ const ProjectsDash = () => {
   useEffect(() => {
     
     const fetchAllProjects = async () => {
-      setLoading(true)
       try {
         const res = await getAllprojects(LIMIT, offset);  
         const newItems = res.projects
@@ -35,24 +34,7 @@ const ProjectsDash = () => {
     fetchAllProjects();  
     
   }, [offset])
-
-  const handleCollab = async (id) => {
-    setBtnLoading(true)
-
-    try {
-      const res = await sendRequest(id)
-
-      setProjects(prev => prev.map(p => (
-        p.id === id ? {...p, requestStatus: res.project_request.status} : p
-      )))
-      
-    } catch (error) {
-      console.error(error.response.data.msg)
-      setError(error.response.data.msg)   
-    }finally{
-      setBtnLoading(false)
-    }
-  }  
+  
 
   return (
     loading ? (
@@ -65,15 +47,21 @@ const ProjectsDash = () => {
         <div className='flex flex-col space-y-4 my-10'>
           {
             projects.map((project, index) => (
-              <ProjectCard key={index} id={project.id} title={project.title} tagline={project.tagline} onClick={() => handleCollab(project.id)} requestStatus={project?.requestStatus} logo={project.logo_url}/>
+              <ProjectCard key={index} id={project.id} title={project.title} tagline={project.tagline} requestStatus={project?.requestStatus} logo={project.logo_url}/>
             ))
           }
         </div>
 
         <div className='flex justify-center items-center'>
-          <Button className='border-2 border-primary-purple px-5 py-2 text-neutral-10 font-medium rounded-lg' onClick={() => handleLoadMore()} >
-            Load More
-          </Button>
+          {
+            projects.length > 0 ? (
+              <Button className='border-2 border-primary-purple px-5 py-2 text-neutral-10 font-medium rounded-lg' onClick={() => handleLoadMore()} >
+                Load More
+              </Button>
+            ) : (
+              <span>No projects yet</span>
+            )
+          }
         </div>
 
       </div>

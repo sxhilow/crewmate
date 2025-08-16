@@ -5,6 +5,7 @@ import FormField from "./atoms/FormField";
 import SideBar from "./molecules/SideBar";
 import AccountNavItems from "./molecules/AccountNavItems";
 import ProjectCard from "./molecules/ProjectCard";
+import NotificationCard from "./molecules/NotificationCard";
 
 export {
     Header,
@@ -13,5 +14,6 @@ export {
     FormField,
     SideBar,
     AccountNavItems,
-    ProjectCard
+    ProjectCard,
+    NotificationCard
 }

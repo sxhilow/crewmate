@@ -10,7 +10,8 @@ import {
   AccountInfo,
   ProjectsDash,
   AddProject,
-  ProjectView
+  ProjectView,
+  Inbox
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
           },    
           {
             path: '/inbox',
-            element: <></>
+            element: <Inbox/>
           }, 
           {
             path: '/teams',
