@@ -19,7 +19,17 @@ export const getProjectService = async (projectId) => {
         throw new BadRequestError("Project with this ID does not exists")
     }
 
-    return project.rows[0]
+    const projectSkills = await pool.query(`SELECT s.name, s.id 
+                                            FROM skills s
+                                            INNER JOIN project_skills ps ON ps.skill_id = s.id
+                                            WHERE ps.project_id = $1`, [projectId])
+
+    const skills = projectSkills.rows.map(row => ({label: row.name, value: row.id}))
+
+    return {
+        project: project.rows[0],
+        skills: skills
+    }
 }
 
 export const addProjectService = async (userId, projectData) => {
