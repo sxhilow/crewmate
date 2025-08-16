@@ -118,7 +118,7 @@ export const sendProjectRequestService = async (projectId, userId) => {
     const projectReq = await pool.query("INSERT INTO project_requests (project_id, user_id, status) VALUES ($1, $2, $3) RETURNING *",[projectId, userId, 'pending']);  
     
 
-    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen) VALUES ($1, $2, $3, $4) RETURNING *", [ownerId, userId, 'join_request', false]);
+    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen, project_id) VALUES ($1, $2, $3, $4, $5) RETURNING *", [ownerId, userId, 'join_request', false, projectId]);
 
     return {
         project_request: projectReq.rows[0],
@@ -154,7 +154,7 @@ export const respondProjectRequestService = async (projectId, requestId, userId,
         await pool.query("INSERT INTO team_members (team_id, user_id) VALUES ((SELECT id FROM teams WHERE project_id=$1), $2)", [projectId, senderId])
     }
 
-    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen) VALUES ($1, $2, $3, $4) RETURNING *", [senderId, userId, type, false])
+    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen, project_id) VALUES ($1, $2, $3, $4, $5) RETURNING *", [senderId, userId, type, false, projectId])
 
     return {
         response: response.rows[0],
