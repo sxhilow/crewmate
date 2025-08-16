@@ -1,0 +1,159 @@
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { getProject } from '../../../controllers/projects'
+import {Button} from '../../../components'
+import { Right } from '../../../assets/icons'
+import { sendRequest } from '../../../controllers/projects'
+
+const ProjectView = () => {
+
+    const {id} = useParams()
+    const [projectData, setProjectData] = useState({})
+    const [skills, setSkills] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState()
+    const [success, setSuccess] = useState()
+    const [btnLoading, setBtnLoading] = useState(false)
+
+    useEffect(() => {
+        const fetchProject = async () => {
+            try {
+                const data = await getProject(id)
+                setProjectData(data.project)
+                setSkills(data.skills)
+                // setProjectData({
+                //     title: data.project.title,
+                //     tagline:data.project.tagline,
+                //     stage: data.project.stage,
+                //     description: data.project.description,
+                //     github_url: data.project.github_url,
+                //     created_at: data.project.created_at
+                // })
+            } catch (error) {
+                console.error(error)
+                setError(error.response.data.msg)
+            }finally{
+                setLoading(false)
+            }
+        }
+
+        fetchProject();
+    }, [])
+
+    const handleCollab = async (id) => {
+        setBtnLoading(true)
+        setError(null)
+        setSuccess(null)
+        try {
+          await sendRequest(id)
+          setSuccess('Request Sent')
+        setS
+
+        } catch (error) {
+          console.error(error)
+          setError(error.response.data.msg)   
+        }finally{
+          setBtnLoading(false)
+        }
+      }  
+
+  return (
+    loading ? (
+      <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
+    ) : (
+      <div className='max-w-3xl text-neutral-13 mx-auto my-20  flex flex-col space-y-10'>
+        {
+            error && (
+                <div className='bg-red-400/40 rounded-lg  text-red-700 p-2 text-center my-2'>
+                        { error }
+                </div>
+            )
+        }
+
+        {
+        success && (
+                <div className='bg-green-400/20 rounded-lg  text-green-700 p-2 text-center my-2'>
+                    { success }
+                </div>
+            )
+        }
+        <div className='w-full m:mb-10 flex max-sm:flex-col justify-between md:items-center space-y-3'>
+        
+          
+            <div className='flex flex-col'>
+         
+              <div className='flex items-center gap-5'>
+                <span className='text-desktop-h3 font-bold'>{projectData.title}</span>
+                <span className='text-center bg-primary-blue min-w-32 px-5 py-1 text-white rounded-xl'>{projectData.stage}</span>
+              </div>
+
+              <span className='text-desktop-p'>{projectData.tagline}</span>            
+              {/*<span className='text-neutral-9'>@{userData.username}</span>*/}
+
+            </div>
+          
+          
+            <div>
+                    {
+                    projectData.github_url && (
+                        <a href={projectData.github_url} target='_blank' className='text-desktop-p max-sm:w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-primary-blue' rel='noopener noreferrer'>
+                            
+                            View on github
+                            <img src={Right} alt="R" />
+                            
+                        </a>
+                        
+                    )
+                    }
+            </div>
+      </div>
+      <div className='w-full'>
+        <h2 className='text-desktop-p font-medium'>Description</h2>
+        <div className='w-full border border-neutral-5 rounded-lg p-5 flex wrap-break-word text-desktop-p'>
+          {projectData.description.length > 0 ? (
+            <span>
+              {projectData.description}
+            </span>
+          ) : (
+            <div>
+              Project dosen't have a description
+            </div>
+          )}
+        </div>
+      </div>
+      <div className='w-full'>
+        <h2 className='text-desktop-p font-medium'>Skills Needed</h2>
+        <div className='w-full flex flex-wrap  border border-neutral-5 rounded-lg p-5  gap-4'>
+          {
+            skills.length > 0 ? (
+              skills.map(({label}) => (
+                <div key={label} className='flex justify-center items-center bg-primary-blue/80 px-2 py-1 min-w-18 font-semibold rounded-lg text-white'>
+                  {label}
+                </div>
+              ))
+            ) : (
+              <div>
+                <span className='text-neutral-7'>Project owner dosen't know what they're doing</span>                
+              </div>
+            )
+          }          
+        </div>
+      </div>
+      <div className='flex justify-start items-center'>
+        <Button className='flex justify-center items-center gap-2 px-4 py-2 rounded-lg text-desktop-h5 border border-primary-blue min-w-32' onClick={() => handleCollab(id)}>
+          {btnLoading ? (
+                "Sending"
+          ) : (
+            <>
+                Collaborate
+                <img src={Right} alt="icon" /> 
+            </>                             
+          )}
+        </Button>
+      </div>
+    </div>
+    )
+  )
+}
+
+export default ProjectView

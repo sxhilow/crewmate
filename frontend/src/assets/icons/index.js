@@ -8,6 +8,7 @@ import Columns from "./Columns.svg"
 import Github from "./github.svg"
 import X from "./x.svg"
 import Logout from "./Logout.svg"
+import Right from "./Right.svg"
 
 export {
     Box,
@@ -19,6 +20,7 @@ export {
     Columns,
     Github,
     X,
-    Logout
+    Logout,
+    Right
 }
 

@@ -9,7 +9,8 @@ import {
   EditProfile,
   AccountInfo,
   ProjectsDash,
-  AddProject
+  AddProject,
+  ProjectView
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             path: '/projects',
             element: <ProjectsDash/>
           },     
+          {
+            path: '/project/:id',
+            element: <ProjectView/>
+          },  
           {
             path: '/share-project',
             element: <AddProject/>
