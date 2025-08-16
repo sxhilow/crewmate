@@ -13,6 +13,7 @@ export const meService = async(userId) => {
     }
 
     return {
+        id: user.id,
         username: user.username,
         name: user.name,
         is_profile_complete: user.is_profile_complete

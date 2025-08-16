@@ -6,7 +6,8 @@ export const getAllNotificationsService = async (userId) => {
                                             FROM notifications n
                                             JOIN users u ON n.actor_id = u.id
                                             LEFT JOIN projects p ON n.project_id = p.id
-                                            WHERE n.user_id=$1
+                                            LEFT JOIN project_requests pr ON n.request_id = pr.id
+                                            WHERE n.user_id=$1 AND (n.request_id IS NULL OR pr.status='pending')
                                             ORDER BY n.created_at DESC`, [userId])
 
     if(!notifications.rows){

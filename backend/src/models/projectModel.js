@@ -40,7 +40,7 @@ export const addProjectService = async (userId, projectData) => {
         throw new BadRequestError("Title, Description, stage and tagline are required")
     }
 
-    if (stage && stage.length > 10) throw new BadRequestError("Stage max length is 10");
+    if (stage && stage.length > 20) throw new BadRequestError("Stage max length is 10");
 
     const project = await pool.query("INSERT INTO projects (user_id, title, tagline, description, stage, logo_url, github_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [userId, title, tagline, description, stage, logo_url, github_url]);
 
@@ -109,16 +109,18 @@ export const sendProjectRequestService = async (projectId, userId) => {
         throw new BadRequestError("Request already sent");
     }
 
-    const memberCheck = await pool.query("SELECT * FROM team_members WHERE user_id=$1", [userId]);
+    const memberCheck = await pool.query("SELECT tm.* FROM team_members tm JOIN teams t ON tm.team_id = t.id WHERE tm.user_id=$1 AND t.project_id=$2",[userId, projectId]
+    );
 
     if(memberCheck.rows.length > 0){
-        throw new BadRequestError("You are already a part of this team")
+        throw new BadRequestError("You are already a part of this project team");
     }
     
     const projectReq = await pool.query("INSERT INTO project_requests (project_id, user_id, status) VALUES ($1, $2, $3) RETURNING *",[projectId, userId, 'pending']);  
     
+    const requestId = projectReq.rows[0].id;
 
-    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen, project_id) VALUES ($1, $2, $3, $4, $5) RETURNING *", [ownerId, userId, 'join_request', false, projectId]);
+    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen, project_id, request_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [ownerId, userId, 'join_request', false, projectId, requestId]);
 
     return {
         project_request: projectReq.rows[0],
@@ -144,7 +146,10 @@ export const respondProjectRequestService = async (projectId, requestId, userId,
     const response = await pool.query("UPDATE project_requests SET status=$1 WHERE id=$2 RETURNING *", [decision, requestId]);
 
 
-    const memberCheck = await pool.query("SELECT * FROM team_members WHERE user_id=$1", [senderId]);
+    const memberCheck = await pool.query(`SELECT tm.* 
+                                        FROM team_members tm 
+                                        JOIN teams t ON tm.team_id = t.id 
+                                        WHERE tm.user_id=$1 AND t.project_id=$2`, [senderId, projectId]);
     if(memberCheck.rows.length) throw new BadRequestError("Already a team member")
         
 
@@ -154,7 +159,11 @@ export const respondProjectRequestService = async (projectId, requestId, userId,
         await pool.query("INSERT INTO team_members (team_id, user_id) VALUES ((SELECT id FROM teams WHERE project_id=$1), $2)", [projectId, senderId])
     }
 
-    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen, project_id) VALUES ($1, $2, $3, $4, $5) RETURNING *", [senderId, userId, type, false, projectId])
+    const notification = await pool.query("INSERT INTO notifications (user_id, actor_id, type, seen, project_id, request_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [senderId, userId, type, false, projectId, requestId])
+
+    await pool.query("UPDATE notifications SET seen=true WHERE request_id=$1 AND user_id=$2",
+        [requestId, userId]
+        );
 
     return {
         response: response.rows[0],

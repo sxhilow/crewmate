@@ -23,7 +23,7 @@ CREATE TABLE projects (
   title VARCHAR(20) NOT NULL,
   tagline VARCHAR(60) NOT NULL,
   description TEXT NOT NULL,
-  stage VARCHAR(10),                -- "Idea", "In Progress", "Complete"
+  stage VARCHAR(20),                -- "Idea", "In Progress", "Complete"
   logo_url TEXT, --question
   github_url TEXT,
   created_at TIMESTAMP DEFAULT NOW()
