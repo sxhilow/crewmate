@@ -92,7 +92,7 @@ export const searchUserService = async (searchItem) => {
     let searchResults;
 
     if(searchItem && searchItem.trim() !== ""){
-        searchResults = await pool.query("SELECT id, username FROM users WHERE username ILIKE $1 ORDER BY username LIMIT 10", [`%${searchItem}%`]) 
+        searchResults = await pool.query("SELECT id, username, name, bio FROM users WHERE username ILIKE $1 ORDER BY username LIMIT 10", [`%${searchItem}%`]) 
 
         if(searchResults.rows.length === 0 || !searchResults){
             throw new NotFoundError("No user Found")
@@ -106,7 +106,37 @@ export const searchUserService = async (searchItem) => {
     const result = searchResults.rows.map((user) => ({
         id: user.id,
         username: user.username,
+        name: user.name,
+        bio: user.bio
     }))
 
     return result;
+}
+
+export const getUserByUsernameService = async (username) => {
+    const result = await pool.query("SELECT id, name, username, bio, github_url, x_url FROM users WHERE username = $1", [username]);
+    const user = result.rows[0]
+    const userId = user.id
+
+    if(!user){
+        throw new BadRequestError("User dosent exists")
+    }
+
+    const skillsResult = await pool.query(`SELECT s.name, s.id
+                                            FROM skills s 
+                                            INNER JOIN user_skills us ON us.skill_id = s.id
+                                            WHERE us.user_id = $1`, [userId])
+
+    
+    const skills = skillsResult.rows.map(row => ({label: row.name, value: row.id}))
+
+    const projectsResult = await pool.query('SELECT * FROM projects WHERE user_id = $1', [userId])
+
+    const project = projectsResult.rows.map(row => ({
+        title: row.title,
+        tagline: row.tagline,
+        stage: row.stage
+    }))
+    
+    return {user, skills, project}
 }
