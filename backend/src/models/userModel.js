@@ -87,3 +87,26 @@ export const updateUserProfileService = async (userData, userId) => {
 
     return {msg: "updated"}
 }
+
+export const searchUserService = async (searchItem) => {
+    let searchResults;
+
+    if(searchItem && searchItem.trim() !== ""){
+        searchResults = await pool.query("SELECT id, username FROM users WHERE username ILIKE $1 ORDER BY username LIMIT 10", [`%${searchItem}%`]) 
+
+        if(searchResults.rows.length === 0 || !searchResults){
+            throw new NotFoundError("No user Found")
+        }
+
+    }else{
+        searchResults = { rows: [] } 
+    }
+
+
+    const result = searchResults.rows.map((user) => ({
+        id: user.id,
+        username: user.username,
+    }))
+
+    return result;
+}

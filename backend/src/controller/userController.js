@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { checkUsernameService, completeProfileService, getUserService, updateUserProfileService } from "../models/userModel.js";
+import { checkUsernameService, completeProfileService, getUserService, searchUserService, updateUserProfileService } from "../models/userModel.js";
 
 export const completeProfile = async (req, res) => {
     const {userId} = req.user;    
@@ -27,4 +27,10 @@ export const updateUserProfile = async(req, res) => {
     const {userData} = req.body;      
     const update = await updateUserProfileService(userData, userId);
     res.status(StatusCodes.OK).json(update)
+}
+
+export const searchUser = async (req, res) => {
+    const {q} = req.query || '';
+    const users = await searchUserService(q);
+    res.status(StatusCodes.OK).json(users)
 }
