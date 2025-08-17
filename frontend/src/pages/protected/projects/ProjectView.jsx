@@ -134,7 +134,7 @@ const ProjectView = () => {
           {
             skills.length > 0 ? (
               skills.map(({label}) => (
-                <div key={label} className='flex justify-center items-center bg-primary-blue/80 px-2 py-1 min-w-18 font-semibold rounded-lg text-white'>
+                <div key={label} className='flex justify-center items-center bg-primary-blue px-2 py-1 min-w-18 font-semibold rounded-lg text-white'>
                   {label}
                 </div>
               ))

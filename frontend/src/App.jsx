@@ -11,10 +11,12 @@ import {
   ProjectsDash,
   AddProject,
   ProjectView,
-  Inbox
+  Inbox,
+  UserProfile
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
+import SearchLayout from "./layouts/SearchLayout"
 
 
 const router = createBrowserRouter([
@@ -60,9 +62,18 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: '/projects',
-            element: <ProjectsDash/>
-          },     
+            element: <SearchLayout/>,
+            children: [
+              {
+                path: '/projects',
+                element: <ProjectsDash/>
+              },  
+               {
+                  path: '/inbox',
+                  element: <Inbox/>
+                }, 
+            ]
+          },   
           {
             path: '/project/:id',
             element: <ProjectView/>
@@ -72,9 +83,9 @@ const router = createBrowserRouter([
             element: <AddProject/>
           },    
           {
-            path: '/inbox',
-            element: <Inbox/>
-          }, 
+            path: '/:username',
+            element: <UserProfile/>
+          },
           {
             path: '/teams',
             element: <></>

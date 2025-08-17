@@ -29,3 +29,24 @@ export const editUserProfile = async (userData) => {
         throw error;
     }
 }
+
+export const searchUsers = async (searchItem) => {
+    try {
+        const res = await API.get(`/user/search?q=${searchItem}`)
+        console.log(res.data);        
+        return res.data
+    } catch (error) {
+        console.error("Error: ", error.response?.data || error.message)
+        throw error;
+    }
+}
+
+export const fetchUserByUsername = async (username) => {
+    try {
+        const res = await API.get(`/user/${username}`)
+        return res.data
+    } catch (error) {
+        console.error("Error: ", error.response?.data || error.message)
+        throw error;
+    }
+}

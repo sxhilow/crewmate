@@ -6,6 +6,8 @@ import SideBar from "./molecules/SideBar";
 import AccountNavItems from "./molecules/AccountNavItems";
 import ProjectCard from "./molecules/ProjectCard";
 import NotificationCard from "./molecules/NotificationCard";
+import SearchUser from "./molecules/SearchUser";
+
 
 export {
     Header,
@@ -15,5 +17,6 @@ export {
     SideBar,
     AccountNavItems,
     ProjectCard,
-    NotificationCard
+    NotificationCard,
+    SearchUser
 }

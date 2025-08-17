@@ -61,7 +61,7 @@ const FormField = ({
           {Icon && 
             <div className='text-slate-400 absolute top-[45%] right-3 transform -translate-y-1/2 cursor-pointer'
             onClick={onClick}>
-                {<Icon size={18}/>}
+                {<img src={Icon} alt="Search"/>}
             </div>
           }
 

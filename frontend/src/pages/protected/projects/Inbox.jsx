@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { NotificationCard } from '../../../components'
 import { getAllNotifications } from '../../../controllers/notification'
 import { respondToRequest } from '../../../controllers/projects'
+import { formatDistanceToNow } from 'date-fns'
 
 const Inbox = () => {
   const [notificationData, setNotificationData] = useState([])      
@@ -48,15 +49,25 @@ const Inbox = () => {
     loading ? (
       <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
     ) : (
-      <div className='w-full min-h-screen flex'>
-        <div className='flex-1'>
+      <div className='w-full min-h-screen flex flex-col'>
+        
           <h1 className='text-desktop-h4 font-bold p-5'>Notifications</h1>
 
           <div className='flex flex-col space-y-4'>
               {
                 notificationData.length > 0 ? (
                   notificationData.map((notification, index) => (
-                    <NotificationCard key={index} type={notification.type} username={notification.actor_username} projectname={notification.project_title} created_at={new Date(notification.created_at).toLocaleTimeString()} response={handleResponse} requestId={notification.request_id} projectId={notification.project_id} btnLoading={btnLoading} request_status={notification.status}/>
+                    <NotificationCard 
+                    key={index} 
+                    type={notification.type} 
+                    username={notification.actor_username} 
+                    projectname={notification.project_title} 
+                    created_at={formatDistanceToNow(new Date(notification.created_at), {addSuffix: true})} 
+                    response={handleResponse} 
+                    requestId={notification.request_id} 
+                    projectId={notification.project_id} 
+                    btnLoading={btnLoading} 
+                    request_status={notification.status}/>
                   ))
                 ) : (
                   <div className='flex justify-center items-center'>
@@ -65,12 +76,7 @@ const Inbox = () => {
                 )
               }
           </div>
-        </div>
-
-        <div className='flex-1'>
-
-        </div>
-
+        
       </div>
     )
   )

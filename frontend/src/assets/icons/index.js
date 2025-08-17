@@ -9,6 +9,7 @@ import Github from "./github.svg"
 import X from "./x.svg"
 import Logout from "./Logout.svg"
 import Right from "./Right.svg"
+import Search from "./Search.svg"
 
 export {
     Box,
@@ -21,6 +22,7 @@ export {
     Github,
     X,
     Logout,
-    Right
+    Right,
+    Search
 }
 
