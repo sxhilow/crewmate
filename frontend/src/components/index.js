@@ -7,6 +7,7 @@ import AccountNavItems from "./molecules/AccountNavItems";
 import ProjectCard from "./molecules/ProjectCard";
 import NotificationCard from "./molecules/NotificationCard";
 import SearchUser from "./molecules/SearchUser";
+import TeamCard from "./molecules/TeamCard";
 
 
 export {
@@ -18,5 +19,6 @@ export {
     AccountNavItems,
     ProjectCard,
     NotificationCard,
-    SearchUser
+    SearchUser,
+    TeamCard
 }

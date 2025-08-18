@@ -12,7 +12,8 @@ import {
   AddProject,
   ProjectView,
   Inbox,
-  UserProfile
+  UserProfile,
+  TeamsDash
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
@@ -88,7 +89,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/teams',
-            element: <></>
+            element: <TeamsDash/>
           }, 
         ]
       }

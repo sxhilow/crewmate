@@ -8,8 +8,9 @@ import AccountInfo from "./protected/profile/AccountInfo";
 import ProjectsDash from "./protected/projects/ProjectsDash";
 import AddProject from "./protected/projects/AddProject";
 import ProjectView from "./protected/projects/ProjectView";
-import Inbox from "./protected/projects/Inbox";
-import UserProfile from "./protected/projects/UserProfile";
+import Inbox from "./protected/Inbox/Inbox";
+import UserProfile from "./protected/profile/UserProfile";
+import TeamsDash from "./protected/teams/TeamsDash";
 
 export {
     LandingPage,
@@ -23,5 +24,6 @@ export {
     AddProject,
     ProjectView,
     Inbox,
-    UserProfile
+    UserProfile,
+    TeamsDash
 }
