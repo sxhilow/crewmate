@@ -1,9 +1,9 @@
 import express from "express"
-import { getAllteams, getTeams } from "../controller/teamController.js";
+import { getAllteams, getTeam } from "../controller/teamController.js";
 
 const router = express.Router();
 
 router.get('/', getAllteams)
-router.get('/:id', getTeams)
+router.get('/:id', getTeam)
 
 export default router

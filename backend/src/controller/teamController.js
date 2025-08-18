@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes"
-import { getAllteamsService } from "../models/teamModel.js"
+import { getAllteamsService, getTeamService } from "../models/teamModel.js"
 
 export const getAllteams = async (req, res) => {
     const {userId} = req.user
@@ -7,6 +7,10 @@ export const getAllteams = async (req, res) => {
     res.status(StatusCodes.OK).json(result)
 }
 
-export const getTeams = async (req, res) => {
-    res.send("Got a team")
+export const getTeam = async (req, res) => {
+    const {id} = req.params;
+    const {userId} = req.user;
+    console.log(id);    
+    const result = await getTeamService(id, userId)
+    res.status(StatusCodes.OK).json(result)
 }
