@@ -41,6 +41,57 @@ export const getTeamService = async (teamId, userId) => {
     return {
         id: teamWithMembers.rows[0].team_id,
         name: teamWithMembers.rows[0].team_name,
-        member: member
+        members: member
     }
+}
+
+export const getTeamMessagesServices = async (teamId, userId) => {
+    const authCheck = await pool.query("SELECT 1 FROM team_members WHERE team_id=$1 AND user_id=$2", [teamId, userId]);
+
+    if(!authCheck.rows || authCheck.rows.length === 0){
+        throw new BadRequestError("Team dosen't exists");
+    }
+
+    const messages = await pool.query(
+      `SELECT m.id, m.sender_id, u.name AS sender_name, m.content, m.created_at
+       FROM messages m
+       JOIN users u ON m.sender_id = u.id
+       WHERE m.team_id = $1
+       ORDER BY m.created_at ASC`,
+      [teamId]
+    );
+
+    if(!messages.rows || messages.rows.length === 0){
+        throw new BadRequestError("No messages yet")
+    }
+
+    return {
+        id: teamId,
+        messages: messages.rows
+    }
+}
+
+export const sendTeamMessagesService = async (teamId, senderId, content) => {
+    console.log(teamId, senderId, content);
+    
+    const authCheck = await pool.query("SELECT 1 FROM team_members WHERE team_id=$1 AND user_id=$2", [teamId, senderId]);
+
+    if(!authCheck.rows || authCheck.rows.length === 0){
+        throw new BadRequestError("Team dosen't exists");
+    }
+
+    const result = await pool.query(
+      `INSERT INTO messages (team_id, sender_id, content, created_at)
+       VALUES ($1, $2, $3, NOW())
+       RETURNING id, sender_id, content, created_at`,
+      [teamId, senderId, content]
+    );
+
+
+    const message = result.rows[0];
+
+    const user = await pool.query(`SELECT name FROM users WHERE id = $1`, [senderId]);
+    message.sender_name = user.rows[0].name;
+
+    return message
 }
