@@ -55,8 +55,8 @@ const NotificationCard = ({
                 <div className='flex justify-between items-center'>
                   <span className='text-lg font text-neutral-13'>
                     You accepted the join request of <Link to={`/user/${username}`} className='text-primary-blue hover:underline'>{username}</Link> 
-                    <span className="text-green-600 font-semibold"> for </span> <span className="font-bold">{projectname}</span>  
-                    {" "}
+                      {" "} for <span className="font-bold">{projectname}</span>  
+                    
                   </span>
                   <span className='text-xs text-neutral-7'>{created_at}</span>
                 </div>
@@ -66,7 +66,7 @@ const NotificationCard = ({
                   <div className='flex justify-between items-center'>
                     <span className='text-lg text-neutral-13'>
                       You rejected the join request of <Link to={`/user/${username}`} className='text-primary-blue hover:underline'>{username}</Link> 
-                      <span className="text-red-600 font-semibold"> for </span> <span className="font-bold">{projectname}</span>
+                       for <span className="font-bold">{projectname}</span>
                     </span>
                     <span className='text-xs text-neutral-7'>{created_at}</span>
                   </div>

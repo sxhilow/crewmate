@@ -3,6 +3,7 @@ import { fetchUserByUsername } from '../../../controllers/user'
 import { useParams } from 'react-router-dom'
 import { Button } from '../../../components'
 import { Github, X } from '../../../assets/icons'
+import { Link } from 'react-router-dom'
 
 const UserProfile = () => {
 
@@ -34,11 +35,31 @@ const UserProfile = () => {
         fetchUser()
     }, [])
 
+    if (loading) {
+        return (
+          <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>
+            Loading...
+          </div>
+        )
+      }
+    
+    if (error) {
+      return (
+        <div className='w-full h-screen flex flex-col justify-center items-center text-center'>
+          <h2 className='text-desktop-h3 font-bold mb-4'>404</h2>
+          <p className='text-neutral-10 mb-6'>{error}</p>
+          <Link
+            to='/projects'
+            className='px-4 py-2 bg-primary-blue text-white rounded-lg hover:bg-primary-blue/90 transition'
+          >
+            Back to Projects
+          </Link>
+        </div>
+      )
+    }
+
 
   return (
-    loading ? (
-      <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
-    ) : (
       <div className='max-w-4xl text-neutral-13  mx-auto my-20  flex flex-col justify-center items-center space-y-10'>
       <div className='w-full  mb-10 flex justify-between items-center'>
           
@@ -110,13 +131,16 @@ const UserProfile = () => {
 
         projects.length > 0 ? (
           projects.map((project) => (
-          <div key={project.title} className='w-full border bg-washed-blue/20 rounded-lg p-5 flex justify-between items-center px-10'>
-              <span className='text-desktop-h5 font-bold '>
-                {project.title}
-              </span>
+          <div key={project.title} className='w-full border shadow bg-washed-blue/20 rounded-lg p-5 flex justify-between items-center px-10'>
+              <div className='flex flex-col space-y-1'>
+                <Link to={`/project/${project.id}`} className='block text-desktop-h5 font-semibold hover:underline hover:text-primary-blue transition duration-150'>
+                    {project.title}
+                </Link>
+                <span className='text-neutral-10'>A platform about booking health</span>
+              </div>
               <span className='text-primary-blue'>
-                {project.projectStage}
-              </span>
+                {project.stage}
+              </span>              
           </div>
         ))
         ) : (
@@ -130,7 +154,6 @@ const UserProfile = () => {
       </div>
     </div>
     )
-  )
 }
 
 export default UserProfile

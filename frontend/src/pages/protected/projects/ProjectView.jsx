@@ -5,6 +5,7 @@ import {Button} from '../../../components'
 import { Right } from '../../../assets/icons'
 import { sendRequest } from '../../../controllers/projects'
 import { useUser } from '../../../context/UserContext'
+import { Link } from 'react-router-dom'
 
 const ProjectView = () => {
 
@@ -24,14 +25,6 @@ const ProjectView = () => {
                 const data = await getProject(id)
                 setProjectData(data.project)
                 setSkills(data.skills)
-                // setProjectData({
-                //     title: data.project.title,
-                //     tagline:data.project.tagline,
-                //     stage: data.project.stage,
-                //     description: data.project.description,
-                //     github_url: data.project.github_url,
-                //     created_at: data.project.created_at
-                // })
             } catch (error) {
                 console.error(error)
                 setError(error.response.data.msg)
@@ -64,15 +57,35 @@ const ProjectView = () => {
         }
       }  
 
+  if (loading) {
+    return (
+      <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>
+        Loading...
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className='w-full h-screen flex flex-col justify-center items-center text-center'>
+        <h2 className='text-desktop-h3 font-bold mb-4'>404</h2>
+        <p className='text-neutral-10 mb-6'>{error}</p>
+        <Link
+          to='/projects'
+          className='px-4 py-2 bg-primary-blue text-white rounded-lg hover:bg-primary-blue/90 transition'
+        >
+          Back to Projects
+        </Link>
+      </div>
+    )
+  }
+
   return (
-    loading ? (
-      <div className='text-desktop-h5 w-full h-screen flex justify-center items-center font-bold'>Loading...</div>
-    ) : (
       <div className='max-w-3xl text-neutral-13 mx-auto my-20  flex flex-col space-y-10'>
         {
             error && (
                 <div className='bg-red-400/40 rounded-lg  text-red-700 p-2 text-center my-2'>
-                        { error }
+                    { error }
                 </div>
             )
         }
@@ -117,7 +130,7 @@ const ProjectView = () => {
       <div className='w-full'>
         <h2 className='text-desktop-p font-medium'>Description</h2>
         <div className='w-full border border-neutral-5 rounded-lg p-5 flex wrap-break-word text-desktop-p'>
-          {projectData.description.length > 0 ? (
+          {projectData?.description?.length > 0 ? (
             <span>
               {projectData.description}
             </span>
@@ -160,7 +173,6 @@ const ProjectView = () => {
       </div>
     </div>
     )
-  )
 }
 
 export default ProjectView

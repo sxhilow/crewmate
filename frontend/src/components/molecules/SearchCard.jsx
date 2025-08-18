@@ -13,7 +13,7 @@ const SearchCard = ({id, name, username, bio}) => {
     }, [user])
 
   return (
-    <Link to={currentUser === id ?  `/me` : `/${username}`} className='block border-b hover:bg-gray-100 transition duration-100'>
+    <Link to={currentUser === id ?  `/me` : `/user/${username}`} className='block border-b hover:bg-gray-100 transition duration-100'>
         <div className='p-5'>
             <div className='flex gap-2 items-center p'>
             <span className='text-lg font-medium'>{name}</span>

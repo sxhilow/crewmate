@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Button from '../../../components/atoms/Button'
 import { Github, X } from '../../../assets/icons'
 import { fetchUserProfile } from '../../../controllers/user'
+import { Link } from 'react-router-dom'
 
 const MyProfile = () => {
   const [userData, setUserData] = useState({})
@@ -119,9 +120,9 @@ const MyProfile = () => {
           projects.map((project) => (
           <div key={project.title} className='w-full border shadow bg-washed-blue/20 rounded-lg p-5 flex justify-between items-center px-10'>
               <div className='flex flex-col space-y-1'>
-                <span className='text-desktop-h5 font-bold '>
-                  {project.title}
-                </span>
+                <Link to={`/project/${project.id}`} className='block text-desktop-h5 font-semibold hover:underline hover:text-primary-blue transition duration-150'>
+                    {project.title}
+                </Link>
                 <span className='text-neutral-10'>A platform about booking health</span>
               </div>
               <span className='text-primary-blue'>
