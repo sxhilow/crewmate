@@ -45,6 +45,7 @@ export const getUserService = async (userId) => {
     const projectsResult = await pool.query('SELECT * FROM projects WHERE user_id = $1', [userId])
 
     const project = projectsResult.rows.map(row => ({
+        id: row.id,
         title: row.title,
         tagline: row.tagline,
         stage: row.stage
@@ -116,11 +117,13 @@ export const searchUserService = async (searchItem) => {
 export const getUserByUsernameService = async (username) => {
     const result = await pool.query("SELECT id, name, username, bio, github_url, x_url FROM users WHERE username = $1", [username]);
     const user = result.rows[0]
-    const userId = user.id
+    
 
     if(!user){
         throw new BadRequestError("User dosent exists")
     }
+
+    const userId = user.id
 
     const skillsResult = await pool.query(`SELECT s.name, s.id
                                             FROM skills s 
@@ -133,6 +136,7 @@ export const getUserByUsernameService = async (username) => {
     const projectsResult = await pool.query('SELECT * FROM projects WHERE user_id = $1', [userId])
 
     const project = projectsResult.rows.map(row => ({
+        id: row.id,
         title: row.title,
         tagline: row.tagline,
         stage: row.stage

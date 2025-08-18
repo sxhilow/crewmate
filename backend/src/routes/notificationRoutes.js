@@ -4,6 +4,6 @@ import { getAllNotifications } from "../controller/notificationController.js"
 
 const router = express.Router()
 
-router.get('/', authMiddleware, getAllNotifications)
+router.get('/', getAllNotifications)
 
 export default router

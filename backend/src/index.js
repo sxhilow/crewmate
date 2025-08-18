@@ -9,6 +9,7 @@ import skillRoutes from './routes/skillRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import projectRoutes from './routes/projectRoutes.js'
 import notificationRoutes from './routes/notificationRoutes.js'
+import teamRoutes from './routes/teamRoutes.js'
 import passport from "passport";
 import "./utils/passport.js"
 import { authMiddleware } from "./middlewares/auth.js";
@@ -41,7 +42,8 @@ app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/skill', skillRoutes)
 app.use('/api/v1/user', authMiddleware, userRoutes)
 app.use('/api/v1/project', projectRoutes)
-app.use('/api/v1/notification', notificationRoutes)
+app.use('/api/v1/notification', authMiddleware, notificationRoutes)
+app.use('/api/v1/team', authMiddleware, teamRoutes)
 // app.use('/api/v1/workouts', authMiddleware, verifyEmailMiddleware, workoutRoutes)
 // app.use('/api/v1/pr', authMiddleware, verifyEmailMiddleware, prRoutes)
 
@@ -54,13 +56,6 @@ app.get('/', async(req, res) => {
 // Error handling middleware
 app.use(errorHandlerMiddleware)
 app.use(notFound)
-
-
-// Create all the tables
-// createAllTables();
-
-
-
 
 
 app.listen(port, () => {
