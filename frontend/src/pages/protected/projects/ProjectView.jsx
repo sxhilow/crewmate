@@ -20,6 +20,12 @@ const ProjectView = () => {
     const [success, setSuccess] = useState()
     const [btnLoading, setBtnLoading] = useState(false)
 
+  useEffect(() => {
+    if(user){
+      setUserId(user.id)
+    }
+  }, [user])
+
     useEffect(() => {
         const fetchProject = async () => {
             try {
@@ -38,11 +44,7 @@ const ProjectView = () => {
         fetchProject();
     }, [])
 
-    useEffect(() => {
-      if(user){
-          setUserId(user.id)
-      }
-    }, [])
+    
 
     const handleCollab = async (id) => {
         setBtnLoading(true)
@@ -106,13 +108,24 @@ const ProjectView = () => {
           
             <div className='flex flex-col'>
          
-              <div className='flex items-center gap-5'>
-                <span className='text-desktop-h3 font-bold'>{projectData.title}</span>
-                <span className='text-center bg-primary-blue min-w-32 px-5 py-1 text-white rounded-xl'>{projectData.stage}</span>
+              <div className='flex flex-col'>
+                
+                <div className='flex items-center gap-5'>
+
+
+                  <span className='text-desktop-h3 font-bold'>{projectData.title}</span>
+                  <span className='text-center bg-primary-blue min-w-32 px-5 py-1 text-white rounded-xl'>{projectData.stage}</span>
+
+
+                </div>
+
               </div>
 
-              <span className='text-desktop-p'>{projectData.tagline}</span>            
-              {/*<span className='text-neutral-9'>@{userData.username}</span>*/}
+              
+
+              <span className='text-desktop-p'>{projectData.tagline}</span>   
+
+              
 
             </div>
           

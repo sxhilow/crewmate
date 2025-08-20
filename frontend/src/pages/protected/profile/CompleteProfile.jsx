@@ -10,7 +10,7 @@ import { useUser } from '../../../context/UserContext';
 
 const CompleteProfile = () => {
 
-    const {user, userLoading} = useUser()
+    const {user, userLoading, setUser} = useUser()
     const navigate = useNavigate()
     const [error, setError] = useState()
     const [loading, setLoading] = useState(false)
@@ -47,6 +47,7 @@ const CompleteProfile = () => {
             
             await completeProfile(userData)
             setLoading(false)
+            setUser(userData)
             navigate("/projects")
         } catch (err) {
             console.error("Error Updating Profile: ", err);

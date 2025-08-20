@@ -8,7 +8,7 @@ const Inbox = () => {
   const [notificationData, setNotificationData] = useState([])      
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState()
-  const [btnLoading, setBtnLoading] = useState('')
+  const [btnLoading, setBtnLoading] = useState()
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -25,7 +25,7 @@ const Inbox = () => {
 
     fetchNotifications();
 
-    const interval = setInterval(fetchNotifications, 5000);
+    const interval = setInterval(fetchNotifications, 2000);
 
     return () => clearInterval(interval);
 

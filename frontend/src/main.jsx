@@ -7,11 +7,11 @@ import { UserProvider } from './context/UserContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
-  
-    <UIProvider>
-      <UserProvider>
-        <App />
-      </UserProvider>        
-    </UIProvider>
+
+  <UserProvider>
+      <UIProvider>        
+          <App />              
+      </UIProvider>
+    </UserProvider>  
 
 )

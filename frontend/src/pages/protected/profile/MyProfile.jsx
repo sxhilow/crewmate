@@ -81,7 +81,7 @@ const MyProfile = () => {
             </span>
           ) : (
             <div>
-              <Button to={'/me/edit-profile'} className='underline'>
+              <Button to={'/my/account'} className='underline'>
                 Your bio
               </Button>
               <span> goes here. Make it iconic. </span>
@@ -101,7 +101,7 @@ const MyProfile = () => {
               ))
             ) : (
               <div>
-                <Button to={'/me/edit-profile'} className='underline'>
+                <Button to={'/my/account'} className='underline'>
                   Add
                 </Button>
                 <span> your skills so people know you’re not just good at doom scrolling</span>                

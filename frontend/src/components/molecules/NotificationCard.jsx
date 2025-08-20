@@ -38,14 +38,14 @@ const NotificationCard = ({
                       className='min-w-20 border-2 p-2 rounded-lg border-primary-blue text-neutral-13 font hover:bg-green-50 transition duration-200'
                       onClick={() => response(projectId, { id: requestId, decision: 'accepted' })}
                     >
-                      {btnLoading && btnLoading === 'accepted' ? "Accepting" : "Accept"}
+                      {btnLoading === 'accepted' ? "Accepting" : "Accept"}
                     </Button>
 
                     <Button
                       className='min-w-20 border-2 p-2 rounded-lg border-red-500 text-neutral-13 font-medium hover:bg-red-50 transition duration-200'
                       onClick={() => response(projectId, { id: requestId, decision: 'rejected' })}
                     >
-                      {btnLoading  && btnLoading === 'rejected' ? "Denying" : "Deny"}
+                      {btnLoading === 'rejected' ? "Denying" : "Deny"}
                     </Button>
                   </div>
                 </>
@@ -66,7 +66,7 @@ const NotificationCard = ({
                   <div className='flex justify-between items-center'>
                     <span className='text-lg text-neutral-13'>
                       You rejected the join request of <Link to={`/user/${username}`} className='text-primary-blue hover:underline'>{username}</Link> 
-                       for <span className="font-bold">{projectname}</span>
+                       {" "} for <span className="font-bold">{projectname}</span>
                     </span>
                     <span className='text-xs text-neutral-7'>{created_at}</span>
                   </div>
