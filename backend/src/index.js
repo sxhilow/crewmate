@@ -44,13 +44,12 @@ app.use('/api/v1/user', authMiddleware, userRoutes)
 app.use('/api/v1/project', projectRoutes)
 app.use('/api/v1/notification', authMiddleware, notificationRoutes)
 app.use('/api/v1/team', authMiddleware, teamRoutes)
-// app.use('/api/v1/workouts', authMiddleware, verifyEmailMiddleware, workoutRoutes)
-// app.use('/api/v1/pr', authMiddleware, verifyEmailMiddleware, prRoutes)
+
 
 
 // Default route
 app.get('/', async(req, res) => {
-    res.send(`Welcome to uniLink API`)
+    res.send(`Welcome to crewmate API`)
 })
 
 // Error handling middleware

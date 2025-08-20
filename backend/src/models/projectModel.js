@@ -16,7 +16,7 @@ export const getProjectService = async (projectId) => {
     const project = await pool.query("SELECT * FROM projects WHERE id=$1", [projectId])
 
     if(!project || project.rows.length === 0){
-        throw new BadRequestError("Project with this ID does not exists")
+        throw new NotFoundError("Project with this ID does not exists")
     }
 
     const projectSkills = await pool.query(`SELECT s.name, s.id 

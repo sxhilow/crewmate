@@ -52,7 +52,7 @@ passport.use(new GitHubStrategy({
       const res = await fetch("https://api.github.com/user/emails", {
         headers: {
           "Authorization": `token ${accessToken}`,
-          "User-Agent": "uniLink"
+          "User-Agent": "crewmate"
         }
       })
 
