@@ -38,14 +38,14 @@ const NotificationCard = ({
                       className='min-w-20 border-2 p-2 rounded-lg border-primary-blue text-neutral-13 font hover:bg-green-50 transition duration-200'
                       onClick={() => response(projectId, { id: requestId, decision: 'accepted' })}
                     >
-                      {btnLoading ? "Accepting" : "Accept"}
+                      {btnLoading && btnLoading === 'accepted' ? "Accepting" : "Accept"}
                     </Button>
 
                     <Button
                       className='min-w-20 border-2 p-2 rounded-lg border-red-500 text-neutral-13 font-medium hover:bg-red-50 transition duration-200'
                       onClick={() => response(projectId, { id: requestId, decision: 'rejected' })}
                     >
-                      Deny
+                      {btnLoading  && btnLoading === 'rejected' ? "Denying" : "Deny"}
                     </Button>
                   </div>
                 </>

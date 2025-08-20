@@ -2,14 +2,13 @@ import React, {useEffect, useState} from 'react'
 import { NotificationCard } from '../../../components'
 import { getAllNotifications } from '../../../controllers/notification'
 import { respondToRequest } from '../../../controllers/projects'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow, parseISO } from 'date-fns'
 
 const Inbox = () => {
   const [notificationData, setNotificationData] = useState([])      
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState()
-  const [success, setSuccess] = useState()
-  const [btnLoading, setBtnLoading] = useState(false)
+  const [btnLoading, setBtnLoading] = useState('')
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -33,7 +32,7 @@ const Inbox = () => {
   }, [])
 
   const handleResponse = async (projectId, decisionData) => {
-    setBtnLoading(true)
+    setBtnLoading(decisionData.decision)
     try {
       await respondToRequest(projectId, decisionData)
       setNotificationData(prev => prev.filter(n => n.request_id !== decisionData.id))
@@ -62,7 +61,7 @@ const Inbox = () => {
                     type={notification.type} 
                     username={notification.actor_username} 
                     projectname={notification.project_title} 
-                    created_at={formatDistanceToNow(new Date(notification.created_at), {addSuffix: true})} 
+                    created_at={formatDistanceToNow(parseISO(notification.created_at), {addSuffix: true})}
                     response={handleResponse} 
                     requestId={notification.request_id} 
                     projectId={notification.project_id} 
