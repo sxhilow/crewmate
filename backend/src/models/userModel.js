@@ -1,11 +1,12 @@
 import pool from "../config/db.js"
-import { BadRequestError } from "../errors/bad-request.js"
+import { BadRequestError } from "../errors/index.js";
 
-export const checkUsernameService = async (username) => {
+export const checkUsernameService = async (username, userId) => {
     const result = await pool.query("SELECT * FROM users WHERE username=$1", [username])
     const user = result.rows[0]
-
-    if(user){
+    console.log(user.id, userId);
+    
+    if(user && user.id !== userId){
         throw new BadRequestError("Username is not available")
     }
 
@@ -14,7 +15,7 @@ export const checkUsernameService = async (username) => {
 
 export const completeProfileService = async (userId, username, name, skills) => {
 
-    await checkUsernameService(username)
+    await checkUsernameService(username, userId)
 
     await pool.query("UPDATE users SET username=$1, name=$2, is_profile_complete=true WHERE id=$3", [username, name, userId])
 
@@ -66,7 +67,7 @@ export const updateUserProfileService = async (userData, userId) => {
     }
 
     if(username && username != user.username){
-        checkUsernameService(username)
+        await checkUsernameService(username, userId)
     }
 
     await pool.query("UPDATE users SET username=$1, name=$2, bio=$3, github_url=$4, x_url=$5, updated_at = NOW() WHERE id=$6", [username, name, bio, github_url, x_url, userId]);

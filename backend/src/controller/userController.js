@@ -11,8 +11,9 @@ export const completeProfile = async (req, res) => {
 }
 
 export const checkUsername = async (req, res) => {
+    const {userId} = req.user;
     const { username } = req.body;
-    const available = await checkUsernameService(username)
+    const available = await checkUsernameService(username, userId)
     res.status(StatusCodes.OK).json(available)
 }
 
