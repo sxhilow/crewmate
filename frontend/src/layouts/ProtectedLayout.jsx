@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { SideBar } from '../components/'
+import { MobileNavbar, SideBar } from '../components/'
 import ScrollRestoration from '../utils/ScrollRestoration'
 import { useUser } from '../context/UserContext'
 
@@ -52,8 +52,14 @@ const ProtectedLayout = () => {
 
               <div className='flex-col w-full'>
 
+                { 
+                  isMobile && (
+                    <MobileNavbar toggleSidebar={toggleSidebar}/>
+                  )
+                }
+
                 <main className={`flex-1 flex-grow overflow-auto ${isSidebarOpen ? "md:pl-64" : "pl-0"} ${isMobile ? 'px-4' : ''}`}>
-                  <Outlet/>
+                  <Outlet context={{isMobile}}/>
                 </main>
 
               </div>

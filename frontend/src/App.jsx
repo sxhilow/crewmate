@@ -13,11 +13,14 @@ import {
   ProjectView,
   Inbox,
   UserProfile,
-  TeamsDash
+  TeamsDash,
+  PageNotFound,
+  SearchPage
 } from "./pages"
 import ProtectedLayout from "./layouts/ProtectedLayout"
 import MyAccountLayout from "./layouts/MyAccountLayout"
 import SearchLayout from "./layouts/SearchLayout"
+import { SearchUser } from "./components"
 
 
 const router = createBrowserRouter([
@@ -32,6 +35,10 @@ const router = createBrowserRouter([
         path: '/auth-redirect',
         element: <AuthRedirect/>
       },
+      {
+        path:  '*',
+        element: <PageNotFound/>
+      }
     ]
   },
   {
@@ -74,7 +81,11 @@ const router = createBrowserRouter([
                   element: <Inbox/>
                 }, 
             ]
-          },   
+          },  
+          {
+            path: '/search',
+            element: <SearchPage/>
+          }, 
           {
             path: '/project/:id',
             element: <ProjectView/>

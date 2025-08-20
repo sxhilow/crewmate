@@ -8,6 +8,7 @@ import ProjectCard from "./molecules/ProjectCard";
 import NotificationCard from "./molecules/NotificationCard";
 import SearchUser from "./molecules/SearchUser";
 import TeamCard from "./molecules/TeamCard";
+import MobileNavbar from "./molecules/MobileNavbar";
 
 
 export {
@@ -20,5 +21,6 @@ export {
     ProjectCard,
     NotificationCard,
     SearchUser,
-    TeamCard
+    TeamCard,
+    MobileNavbar
 }

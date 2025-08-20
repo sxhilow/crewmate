@@ -26,7 +26,7 @@ const AuthRedirect = () => {
           if(!user?.is_profile_complete){
             navigate('/complete-profile')
           }else{
-            navigate('/project')
+            navigate('/projects')
           }
         }
     }, [location, navigate, user, userLoading])

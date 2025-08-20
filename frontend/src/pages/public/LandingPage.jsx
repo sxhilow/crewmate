@@ -20,7 +20,7 @@ const LandingPage = () => {
             <span>Ship Faster Together</span>
           </div>
           <p className='text-desktop-h5 font-medium text-dark'>
-            Connect with skilled collaborators who match your energy and vision.
+            Connect with skilled collaborators who match your energy and vision
           </p>
           </div>
 
@@ -37,14 +37,14 @@ const LandingPage = () => {
             </div>
           </Button>
 
-          <Button
+         {/* <Button
             to="/browse-project"
             className="flex justify-center items-center bg-gradient-to-r from-primary-purple to-primary-blue p-[2px] rounded-lg hover:from-primary-blue hover:to-primary-purple transition duration-300"
           >
             <div className="flex justify-center items-center bg-bg w-full h-full px-4 py-2 rounded-lg transition duration-300 hover:bg-gray-100">
               <span className="text-primary-purple-800">Browse Projects</span>
             </div>
-          </Button>
+          </Button> */}
 
           </div>
 

@@ -44,7 +44,7 @@ const ProjectsDash = () => {
         <h1 className='text-desktop-h4 font-bold'>Projects</h1>
         <p className='text-desktop-p text-neutral-13'>Build and collab with others</p> 
 
-        <div className='flex flex-col space-y-4 my-10'>
+        <div className='flex flex-col space-y-4 my-10 lg:mx-5'>
           {
             projects.map((project, index) => (
               <ProjectCard key={index} id={project.id} title={project.title} tagline={project.tagline} requestStatus={project?.requestStatus} logo={project.logo_url}/>

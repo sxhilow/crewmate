@@ -47,7 +47,7 @@ const CompleteProfile = () => {
             
             await completeProfile(userData)
             setLoading(false)
-            navigate("/dashboard")
+            navigate("/projects")
         } catch (err) {
             console.error("Error Updating Profile: ", err);
             
@@ -127,7 +127,9 @@ const CompleteProfile = () => {
                         </div>
                         
                         <div className='flex justify-end items-center'>
-                            <Button type="submit" className='flex justify-center items-center border-2 border-neutral-10 text-black px-4 py-2 rounded-lg hover:bg-black/20 transition duration-300'>Complete Profile</Button>
+                            <Button type="submit" className='flex justify-center items-center border-2 border-neutral-10 text-black px-4 py-2 rounded-lg hover:bg-black/20 transition duration-300'>
+                                {loading ? "completing..." : "Complete Profile"}
+                            </Button>
                         </div>
                         
                     </form>

@@ -11,6 +11,8 @@ import ProjectView from "./protected/projects/ProjectView";
 import Inbox from "./protected/Inbox/Inbox";
 import UserProfile from "./protected/profile/UserProfile";
 import TeamsDash from "./protected/teams/TeamsDash";
+import PageNotFound from "./public/404";
+import SearchPage from "./protected/profile/SearchPage";
 
 export {
     LandingPage,
@@ -25,5 +27,7 @@ export {
     ProjectView,
     Inbox,
     UserProfile,
-    TeamsDash
+    TeamsDash,
+    PageNotFound,
+    SearchPage
 }

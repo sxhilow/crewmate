@@ -17,7 +17,7 @@ const Header = ({onLogin, onSignup}) => {
             >
               <div className="flex justify-center items-center bg-dark w-full h-full px-8 py-2 rounded-xl hover:bg-primary-purple-800 transition duration-300">
                 <span className="bg-gradient-to-br from-neutral-5 to-neutral-7 bg-clip-text text-transparent hover:from-neutral-7 hover:to-neutral-5 transition duration-300">
-                  Sign up
+                  Sign in
                 </span>
               </div>
             </Button>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {Logo} from "../../assets"
 import {Link, NavLink, useNavigate} from "react-router-dom"
 import { Button } from '../'
-import { Box, Columns, Layers, Logout, Rocket, Settings, User, Users } from '../../assets/icons'
+import { Box, Columns, Layers, Logout, Rocket, Search, Settings, User, Users } from '../../assets/icons'
 import { useUser } from '../../context/UserContext'
 
 const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
@@ -86,6 +86,19 @@ const SideBar = ({ isopen, toggleSidebar, isMobile}) => {
                             </li>
                         )}
                     </NavLink> 
+
+                    {
+                        isMobile && (
+                            <NavLink to={'/search'} onClick={handleNavClick}> 
+                                {({isActive}) => (
+                                    <li className={`${isActive ? "bg-white" : "hover:bg-white"} w-full cursor-pointer transition duration-200 p-1 rounded-lg flex items-center gap-2 my-1`}>
+                                        <img src={Search} alt="Search" />
+                                        <span>Search</span>                  
+                                    </li>
+                                )}
+                            </NavLink> 
+                        )
+                    }
                 </ul>
             </div>
         </div>

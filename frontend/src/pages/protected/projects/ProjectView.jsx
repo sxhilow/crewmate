@@ -16,6 +16,7 @@ const ProjectView = () => {
     const [skills, setSkills] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState()
+    const [errorStatus, setErrorStatus] = useState()
     const [success, setSuccess] = useState()
     const [btnLoading, setBtnLoading] = useState(false)
 
@@ -27,6 +28,7 @@ const ProjectView = () => {
                 setSkills(data.skills)
             } catch (error) {
                 console.error(error)
+                setErrorStatus(error.response.status)
                 setError(error.response.data.msg)
             }finally{
                 setLoading(false)
@@ -51,6 +53,7 @@ const ProjectView = () => {
           setSuccess('Request Sent')
         } catch (error) {
           console.error(error)
+          setErrorStatus(error.response.status)
           setError(error.response.data.msg)   
         }finally{
           setBtnLoading(false)
@@ -65,7 +68,8 @@ const ProjectView = () => {
     )
   }
 
-  if (error) {
+  
+  if (errorStatus === 404) {
     return (
       <div className='w-full h-screen flex flex-col justify-center items-center text-center'>
         <h2 className='text-desktop-h3 font-bold mb-4'>404</h2>
