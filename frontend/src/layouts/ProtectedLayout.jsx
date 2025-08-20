@@ -58,7 +58,7 @@ const ProtectedLayout = () => {
                   )
                 }
 
-                <main className={`flex-1 flex-grow overflow-auto ${isSidebarOpen ? "md:pl-64" : "pl-0"} ${isMobile ? 'px-4' : ''}`}>
+                <main className={`flex-1 flex-grow overflow-auto ${isSidebarOpen ? "md:pl-64" : "pl-0"} ${isMobile ? '' : ''}`}>
                   <Outlet context={{isMobile}}/>
                 </main>
 

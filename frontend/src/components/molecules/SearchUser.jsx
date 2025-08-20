@@ -24,7 +24,7 @@ const SearchUser = () => {
     }
   return (
     <div className='pt-5'>
-        <div className='px-2 lg:px-4 relative'>
+        <div className='px-4 relative'>
             <input type="text" className='w-full mb-4 mt-2 text-neutral-10 px-14 py-2 rounded-lg focus:ring-2 focus:ring-primary-blue focus:outline-none border' placeholder='search' onChange={(e) => fetchUsers(e.target.value)}/>
 
             <div className='text-slate-400 absolute left-8 top-7 transform -translate-y-1/2 cursor-pointer '>

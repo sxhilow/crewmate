@@ -85,7 +85,7 @@ const ProjectView = () => {
   }
 
   return (
-      <div className='max-w-3xl text-neutral-13 mx-auto my-20  flex flex-col space-y-10'>
+      <div className='max-w-3xl text-neutral-13 mx-auto my-10 md:my-20  flex flex-col space-y-10 px-4'>
         {
             error && (
                 <div className='bg-red-400/40 rounded-lg  text-red-700 p-2 text-center my-2'>
