@@ -43,9 +43,7 @@ const CompleteProfile = () => {
         e.preventDefault() 
         setError('')   
         setLoading(true)
-        try {
-            console.log(userData.skills);
-            
+        try {            
             await completeProfile(userData)            
             setUser(userData)
             navigate("/projects")
