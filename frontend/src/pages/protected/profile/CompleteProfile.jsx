@@ -27,6 +27,7 @@ const CompleteProfile = () => {
             setUserData({
                 username: user.username,
                 name: user.name,
+                skills: []
             })
         }else{
             navigate('/projects')
@@ -43,21 +44,21 @@ const CompleteProfile = () => {
         setError('')   
         setLoading(true)
         try {
-            console.log(userData);
+            console.log(userData.skills);
             
-            await completeProfile(userData)
-            setLoading(false)
+            await completeProfile(userData)            
             setUser(userData)
             navigate("/projects")
         } catch (err) {
-            console.error("Error Updating Profile: ", err);
-            
+            console.error("Error Updating Profile: ", err);            
             const message =
             err?.response?.data?.msg ||
             err?.message ||
             "Something went wrong.";
-
             setError(message);      
+
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -116,13 +117,16 @@ const CompleteProfile = () => {
                                 }}
 
                                 onChange={(selectedOptions) => {
-                                    const skillValues = selectedOptions.map(option => option.value);
+                                
+                                    const skillValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
                                     console.log(skillValues);
                                     
                                     setUserData(prev => ({
                                         ...prev,
                                         skills: skillValues
                                     }))
+                                                            
+                                    
                                 }}
                             />
                         </div>
