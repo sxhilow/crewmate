@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, FormField } from '../../../components'
 import AsyncSelect from 'react-select/async'
 import { searchSkills } from '../../../controllers/skills'
@@ -11,18 +11,17 @@ const AddProject = () => {
         stage: 'idea',
         tagline: '',
         description: '',
-        skills: [
-            {
-            label: '',
-            value: null
-            },
-        ],
+        skills: [],
         github_url: ''
     })
     const [loading, setLoading] = useState(false)
     const [aiGenerating, setAiGenerating] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
+
+    const [suggestedSkills, setSuggestedSkills] = useState([])
+    const [loadingSuggestions, setLoadingSuggessions] = useState(false)
+
 
     const loadOptions = async (inputValue) => {
         return await searchSkills(inputValue);
@@ -43,6 +42,7 @@ const AddProject = () => {
         }
     }
 
+
     const handleDescriptionGenerate = async () => {
 
         try {
@@ -50,10 +50,16 @@ const AddProject = () => {
             setAiGenerating(true)
 
             if (!window.puter || !window.puter.ai || typeof window.puter.ai.chat !== "function") {
-                alert("Puter AI not ready");
+                setAiGenerating(false)
+                alert("Puter AI not loaded");
                 return;
             }
 
+            if(formData.title == '' || formData.tagline == ''){
+                setAiGenerating(false)
+                alert("Enter Title and Tagline before generating")
+                return;
+            }
 
            
             const prompt = `
@@ -73,6 +79,8 @@ const AddProject = () => {
                 Project data:
                 - Title: ${formData.title}
                 - Tagline: ${formData.tagline}
+                - User inputed Description (one you're replacing with) : ${formData.description}
+                - Project working stage: ${formData.stage}
 
                 Return ONLY the final description — no commentary or labels.
                 `;
@@ -80,6 +88,7 @@ const AddProject = () => {
 
 
             const response = await window.puter.ai.chat(prompt);
+            
 
             const reply = typeof response === "string" ? response : response.message?.content || "No reply received"
             
@@ -89,12 +98,68 @@ const AddProject = () => {
 
         } catch (error) {
             setAiGenerating(false)
-            console.error(err);
+            console.error(error);
             alert("AI generation failed. Try again.");
         }
 
-        
     }
+
+    const handleRecommendedTags = async () => {
+        try {
+            setLoadingSuggessions(true)
+
+            if (!window.puter || !window.puter.ai || typeof window.puter.ai.chat !== "function") {
+                alert("Puter AI not loaded");
+                return;
+            }
+
+            const prompt = `Based on this project, list 5-8 relevant technical skills as a comma-separated list (e.g., "React, Node.js, MongoDB"). No explanations, just the skill names.
+            Title: ${formData.title}
+            Tagline: ${formData.tagline}
+            Description: ${formData.description}`;
+
+            const response = await window.puter.ai.chat(prompt);
+
+            const reply = typeof response === "string" ? response : response.message?.content || "No reply received"
+
+            const skills = reply.split(', ')
+
+            console.log(skills);
+            
+
+            const matchedSkills = await Promise.all(skills.map(async (skill) => {
+                try {
+                    const result = await searchSkills(skill.trim());
+                    return result[0] || null;
+                } catch (err) {
+                    console.warn(`Skill not found or failed: ${skill}`);
+                    return null; // skip missing ones
+                }                          
+            }));
+
+            console.log(matchedSkills);
+
+            setSuggestedSkills(matchedSkills.filter(s => s !== null))
+            setLoadingSuggessions(false)
+
+        } catch (error) {
+            setAiGenerating(false)
+            console.error(error);
+            alert("AI generation failed. Try again.");
+        }
+    }
+
+
+
+    useEffect(() => {
+    if (formData.description && formData.description.length > 50) {
+        const timeout = setTimeout(() => {
+        handleRecommendedTags();
+        }, 2000); 
+
+        return () => clearTimeout(timeout); 
+    }
+    }, [formData.description]);
 
   return (
     <div className='p-5 w-full min-h-screen'>
@@ -170,22 +235,14 @@ const AddProject = () => {
                 </div>
                 
                 <div className='mb-5'>
-
-                    <label className="text-neutral-13">
-                        Skills needed
-                    </label>
+                    <label className="text-neutral-13">Skills needed</label>
                     <AsyncSelect
-
                         loadOptions={loadOptions}
                         defaultOptions
                         isMulti
                         placeholder=""
-                        classNames={{
-                            control: (state) =>
-                            state.isFocused ? 'border-red-600' : 'border-grey-300',
-                        }}
-
-                        onChange={(selectedOptions) => {                         
+                        value={formData.skills}
+                        onChange={(selectedOptions) => {
                             setFormData(prev => ({
                                 ...prev,
                                 skills: selectedOptions
@@ -193,6 +250,58 @@ const AddProject = () => {
                         }}
                         required
                     />
+                   
+                    
+                        <div className='mt-4'>
+                            <p className='text-neutral-11 mb-2'>
+                                Suggested skills (click to add)
+                            </p>
+                            <div className='flex flex-wrap gap-2 w-full mb-4 mt-2 text-neutral-10 px-4 py-2 rounded-md focus:ring-2 focus:ring-primary-blue focus:outline-none border border-gray-300'>
+                            {suggestedSkills.length > 0 ? (
+
+                                suggestedSkills.map((skill, index) => {
+                                    const isAlreadyAdded = formData.skills.some(s => s.value === skill.value)
+
+                                    return (
+                                        <button
+                                            key={index}
+                                            type='button'
+                                            onClick={() => {
+                                                if (!isAlreadyAdded) {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        skills: [...prev.skills, skill]
+                                                    }))
+                                                }
+                                            }}
+                                            disabled={isAlreadyAdded}
+                                            className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                                                isAlreadyAdded 
+                                                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                                                    : 'bg-blue-100 text-blue-700 hover:bg-blue-200 cursor-pointer'
+                                            }`}
+                                        >
+                                            {isAlreadyAdded ? '✓ ' : '+ '}{skill.label}
+                                        </button>
+                                    )
+                                })
+
+                                ) : (
+
+                                    <p className='text-center text-sm text-neutral-7'>
+                                        {loadingSuggestions ? "Fetching relevent skills..." : "Write description to fetch relevent skills"}
+                                    </p>
+
+                                )
+                            
+                            }
+                            </div>
+                        </div>
+                    
+                </div>
+
+                <div>
+
                 </div>
 
                 <div  className='flex justify-end items-center max-sm:mt-14'>

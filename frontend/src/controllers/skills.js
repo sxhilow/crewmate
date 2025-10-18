@@ -5,7 +5,7 @@ export const searchSkills = async(searchItem) => {
         const res = await API.get(`/skill?search=${searchItem}`)
         return res.data
     } catch (error) {
-        console.error("Error: ", error.response?.data || error.message)
+        console.warn("Error: ", error.response?.data || error.message)
         throw error;
     }
 }

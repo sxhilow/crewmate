@@ -14,7 +14,7 @@ const Button = ({to, children, className='', disabled, ...props}) => {
         ${disabled 
           ? 'opacity-50 cursor-not-allowed' 
           : 'hover:bg-primary-blue/10 cursor-pointer'} 
-        ${className}`}
+        ${className} text-desktop-p`}
       {...props}
     >
       {children}
