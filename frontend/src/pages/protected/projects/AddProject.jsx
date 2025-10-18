@@ -20,6 +20,7 @@ const AddProject = () => {
         github_url: ''
     })
     const [loading, setLoading] = useState(false)
+    const [aiGenerating, setAiGenerating] = useState(false)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
 
@@ -40,6 +41,59 @@ const AddProject = () => {
         }finally{
             setLoading(false)
         }
+    }
+
+    const handleDescriptionGenerate = async () => {
+
+        try {
+
+            setAiGenerating(true)
+
+            if (!window.puter || !window.puter.ai || typeof window.puter.ai.chat !== "function") {
+                alert("Puter AI not ready");
+                return;
+            }
+
+
+           
+            const prompt = `
+                You are an experienced startup copywriter specializing in developer-focused platforms.
+                Your task: write a concise, consistent, and human-sounding project description
+                for a collaboration platform where developers share projects and attract teammates.
+
+                Follow these exact rules:
+                1. Style: natural, friendly, slightly enthusiastic (no marketing buzzwords).
+                2. Tone: confident but conversational — think "dev posting on a project board".
+                3. Length: 50–80 words, one short paragraph only.
+                4. Focus: describe what the project does, its goal, and what help is needed.
+                5. Formatting: plain text only — no bold, markdown, or headings.
+                6. Bullet points allowed only if describing features or roles needed.
+                7. Avoid generic intros like "This project is about" or "Our project aims to".
+
+                Project data:
+                - Title: ${formData.title}
+                - Tagline: ${formData.tagline}
+
+                Return ONLY the final description — no commentary or labels.
+                `;
+
+
+
+            const response = await window.puter.ai.chat(prompt);
+
+            const reply = typeof response === "string" ? response : response.message?.content || "No reply received"
+            
+            setFormData({...formData, description: reply})
+
+            setAiGenerating(false)
+
+        } catch (error) {
+            setAiGenerating(false)
+            console.error(err);
+            alert("AI generation failed. Try again.");
+        }
+
+        
     }
 
   return (
@@ -71,7 +125,7 @@ const AddProject = () => {
                     <div className="flex-1">
                         <label className="text-neutral-13">Stage</label>
                         <select
-                            name="stage"                            
+                            name="stage" 
                             className="w-full mb-4 mt-2 text-neutral-10 px-4 py-2 rounded-md focus:ring-2 focus:ring-primary-blue focus:outline-none border"
                             value={formData.stage}
                             onChange={(e) => setFormData({...formData, stage: e.target.value})}
@@ -88,7 +142,28 @@ const AddProject = () => {
 
                     <FormField label={'Tagline'} labelClassName='text-neutral-13' placeholder={'Find your perfect dev partner'} maxLength={60} value={formData.tagline} onChange={(e) => setFormData({...formData, tagline: e.target.value})} required/>
                     
-                    <FormField label={'Description'} labelClassName='text-neutral-13' type={'textarea'} placeholder={'A platform for developers to find collaborators for their projects, with team chat and skill matching features.'} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} required/>
+                    <div className='mt-1'>
+
+                        <div className='w-full flex justify-between items-center'>
+                            <label htmlFor="description">Description</label>
+                            <Button type='button' onClick={handleDescriptionGenerate} className='text-sm font-medium text-neutral-9' disabled={aiGenerating}>
+                                ✨ Generate with AI
+                            </Button>
+                        </div>
+
+                        <textarea
+                            name="description"
+                            className={`w-full mb-4 mt-2 text-neutral-10 px-4 py-2 rounded-md focus:ring-2 focus:ring-primary-blue focus:outline-none border`}
+                            value={aiGenerating ? "Generating Description..." : formData.description  }
+                            disabled={aiGenerating}
+                            onChange={(e) => setFormData({...formData, description: e.target.value})}
+                            placeholder='A platform for developers to find collaborators for their projects, with team chat and skill matching features.'
+                            required
+                            rows={5}
+
+                        />
+
+                    </div>
 
                     <FormField label={'Github URL'}  labelClassName='text-neutral-13' type={"url"} placeholder={'https://github.com/sahilow/crewmate'} value={formData.github_url} onChange={(e) => setFormData({...formData, github_url: e.target.value})} required/>
 
@@ -120,8 +195,8 @@ const AddProject = () => {
                     />
                 </div>
 
-                <div type="submit" className='flex justify-end items-center max-sm:mt-14'>
-                    <Button className='bg-washed-blue border border-primary-blue px-4 py-2 rounded-lg max-sm:w-full'>
+                <div  className='flex justify-end items-center max-sm:mt-14'>
+                    <Button type="submit" className='bg-washed-blue border border-primary-blue px-4 py-2 rounded-lg max-sm:w-full'>
                         {loading ? 'Sharing...' : 'Share Project'}
                     </Button>
                 </div>
