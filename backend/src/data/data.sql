@@ -1,15 +1,54 @@
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(20) UNIQUE NOT NULL,
+  username VARCHAR(50) UNIQUE NOT NULL,
   name VARCHAR(50) NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
   provider VARCHAR(20),             -- 'google' or 'github'
   bio TEXT,
   about TEXT,
+  is_profile_complete BOOLEAN DEFAULT false,
+  github_url TEXT,
+  x_url TEXT,
+  program program NOT NULL,
+  year student_year NOT NULL,
+  campus campuses NOT NULL,
   created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  is_profile_complete BOOLEAN DEFAULT false
+  updated_at TIMESTAMP DEFAULT NOW()
 );
+
+
+CREATE TYPE program AS ENUM (
+  'HCIT',          -- Higher Certificate in IT
+  'DIT',           -- Diploma in IT
+  'BSc IT',        -- Bachelor of Science in IT
+  'BCom',          -- Bachelor of Commerce
+  'BBA',           -- Bachelor of Business Administration
+  'PGDip',         -- Postgraduate Diploma in Management
+  'BSc IT Hons',   -- Honours in IT
+  'MBA',           -- Master of Business Administration
+  'Other'
+);
+
+CREATE TYPE student_year AS ENUM (
+  '1',
+  '2',
+  '3',
+  'Articulation',
+  'Postgraduate'
+);
+
+CREATE TYPE campuses AS ENUM (
+  UMHLANGA, 
+  BRYANSTON, 
+  CAPE TOWN, 
+  CENTURION, 
+  NEWTOWN JUNCTION, 
+  PRETORIA, 
+  MUSGRAVE, 
+  POLOKWANE
+);
+
+
 
 
 CREATE TABLE skills (

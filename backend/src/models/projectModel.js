@@ -183,3 +183,8 @@ export const getProjectRequestsService = async (userId) => {
         requests: requests.rows
     }
 }
+
+
+export const getRecommendedProjectsModel = async () => {
+
+}

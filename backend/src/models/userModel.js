@@ -13,23 +13,36 @@ export const checkUsernameService = async (username, userId) => {
     return {msg: "Available"}
 }
 
-export const completeProfileService = async (userId, username, name, skills) => {
+export const completeProfileService = async (userData, userId) => {
 
-    
-    
+    const {
+        username, 
+        name, 
+        bio,
+        skills = [], 
+        campus, 
+        year, 
+        program,
+        github_url = null,
+        x_url = null
+    } = userData;
+
     await checkUsernameService(username, userId)
 
+
+    await pool.query("UPDATE users SET username=$1, name=$2, campus=$3, year=$4, program=$5, is_profile_complete=true, github_url=$6, x_url=$7, bio=$8 WHERE id=$9", [username, name, campus, year, program, github_url, x_url, bio, userId])
     
 
-    await pool.query("UPDATE users SET username=$1, name=$2, is_profile_complete=true WHERE id=$3", [username, name, userId])
+    if(Array.isArray(skills) && skills.length > 0){
+
+        const userSkills = skills.map(skill => (
+            pool.query("INSERT INTO user_skills (user_id, skill_id) VALUES($1, $2) ON CONFLICT DO NOTHING", [userId, skill])
+        ))
+
+        await Promise.all(userSkills)
+    }
 
     
-
-    const userSkills = skills.map(skill => (
-        pool.query("INSERT INTO user_skills (user_id, skill_id) VALUES($1, $2) ON CONFLICT DO NOTHING", [userId, skill])
-    ))
-
-    await Promise.all(userSkills)
 }
 
 export const getUserService = async (userId) => {
@@ -63,7 +76,17 @@ export const getUserService = async (userId) => {
 
 export const updateUserProfileService = async (userData, userId) => {
 
-    const {name, bio, username, github_url, x_url, skills = []} = userData;
+     const {
+        username, 
+        name, 
+        bio,
+        skills = [], 
+        campus, 
+        year, 
+        program,
+        github_url = null,
+        x_url = null
+    } = userData;
     
     const result = await pool.query("SELECT * FROM users WHERE id=$1", [userId])
     const user = result.rows[0]
@@ -76,7 +99,7 @@ export const updateUserProfileService = async (userData, userId) => {
         await checkUsernameService(username, userId)
     }
 
-    await pool.query("UPDATE users SET username=$1, name=$2, bio=$3, github_url=$4, x_url=$5, updated_at = NOW() WHERE id=$6", [username, name, bio, github_url, x_url, userId]);
+    await pool.query("UPDATE users SET username=$1, name=$2, bio=$3, github_url=$4, x_url=$5, campus=$6, year=$7, program=$8, updated_at = NOW() WHERE id=$9", [username, name, bio, github_url, x_url, campus, year, program, userId]);
 
     const skillIds = skills.map(skill => skill.value);
     
@@ -122,7 +145,7 @@ export const searchUserService = async (searchItem) => {
 }
 
 export const getUserByUsernameService = async (username) => {
-    const result = await pool.query("SELECT id, name, username, bio, github_url, x_url FROM users WHERE username = $1", [username]);
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
     const user = result.rows[0]
     
 
@@ -150,4 +173,8 @@ export const getUserByUsernameService = async (username) => {
     }))
     
     return {user, skills, project}
+}
+
+export const getRecommendedUsersModel = async () => {
+
 }

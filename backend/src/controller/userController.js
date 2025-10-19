@@ -3,11 +3,12 @@ import { checkUsernameService, completeProfileService, getUserByUsernameService,
 
 export const completeProfile = async (req, res) => {
     const {userId} = req.user;    
-    const {username, name, skills} = req.body;
+    const userData = req.body;
 
-    await completeProfileService(userId, username, name, skills)
+    await completeProfileService(userData, userId)
 
-    res.status(StatusCodes.OK).send("completed")
+
+    res.status(StatusCodes.OK).send("Profile completed")
 }
 
 export const checkUsername = async (req, res) => {
@@ -40,4 +41,8 @@ export const getUserByUsername = async (req, res) => {
     const {username} = req.params;
     const user = await getUserByUsernameService(username);
     res.status(StatusCodes.OK).json(user)
+}
+
+export const getRecommendedUsers = async (req, res) => {
+    res.send("Recommended users")
 }
