@@ -91,7 +91,7 @@ const MyProfile = () => {
       </div>
       <div className='w-full space-y-3'>
         <h2 className='text-desktop-h5 font-bold'>Skills</h2>
-        <div className='w-full flex flex-wrap border bg-washed-blue/20 rounded-lg shadow p-5  gap-4'>
+        <div className='w-full flex flex-wrap border bg-washed-blue/20 rounded-lg shadow p-5  gap-2'>
           {
             skills.length > 0 ? (
               skills.map(({label}) => (

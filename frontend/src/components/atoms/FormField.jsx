@@ -14,10 +14,11 @@ const FormField = ({
   error,
   Icon,
   required,
-  maxLength
+  maxLength,
+  rows=5
 }) => {
   return (
-    <div className={`${className} flex flex-col`}>
+    <div className={`${className} flex flex-col w-fll`}>
 
         <div className='flex justify-between items-center'>
           <label 
@@ -41,7 +42,7 @@ const FormField = ({
               onChange={onChange}
               placeholder={placeholder}
               required={required}
-              rows={5}
+              rows={rows}
             />
             ) : (
             <input 

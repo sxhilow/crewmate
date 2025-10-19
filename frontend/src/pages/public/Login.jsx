@@ -1,9 +1,9 @@
 import React from 'react'
 import Logo from "../../assets/Logo.svg"
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { FaGoogle, FaGithub, FaMicrosoft } from "react-icons/fa";
 import {IoCloseSharp} from "react-icons/io5"
 import { Button } from '../../components';
-import { googleLogin, githubLogin } from '../../controllers/auth';
+import { microsoftLogin } from '../../controllers/auth';
 const Login = ({onClose}) => {
 
   return (
@@ -16,14 +16,22 @@ const Login = ({onClose}) => {
           <p className='text-xl  text-center leading-tight text-neutral-7'>Start building. Start collaborating. Find your crew and build your future.</p>
         </div>
         <div className='flex flex-col w-[50%] space-y-2'>
-          <Button onClick={googleLogin} className='flex justify-center items-center border border-dark py-2 gap-3 hover:bg-primary-blue/10 transition duration-300'>
-            <FaGoogle className='text-primary-blue' size={24}/>
-            <span className='font-bold text-desktop-p'>Continue with Google</span>
+          {/*
+            <Button onClick={googleLogin} className='flex justify-center items-center border border-dark py-2 gap-3 hover:bg-primary-blue/10 transition duration-300'>
+              <FaGoogle className='text-primary-blue' size={24}/>
+              <span className='font-bold text-desktop-p'>Continue with Google</span>
+            </Button>
+            <Button onClick={githubLogin} className='flex justify-center items-center border border-dark py-2 gap-3 hover:bg-primary-blue/10 transition duration-300'>
+              <FaGithub size={24}/>
+              <span className='font-bold text-desktop-p'>Continue with Github</span>
+            </Button>
+          */}
+
+          <Button onClick={microsoftLogin} className='flex justify-center items-center border border-dark py-2 gap-3 hover:bg-primary-blue/10 transition duration-300'>
+            <FaMicrosoft size={24}/>
+            <span className='font-bold text-desktop-p'>Continue with Microsoft</span>
           </Button>
-          <Button onClick={githubLogin} className='flex justify-center items-center border border-dark py-2 gap-3 hover:bg-primary-blue/10 transition duration-300'>
-            <FaGithub size={24}/>
-            <span className='font-bold text-desktop-p'>Continue with Github</span>
-          </Button>
+          
         </div>
     </div>
   )
