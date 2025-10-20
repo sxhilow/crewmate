@@ -30,6 +30,7 @@ const ProjectView = () => {
         const fetchProject = async () => {
             try {
                 const data = await getProject(id)
+                console.log(data);                
                 setProjectData(data.project)
                 setSkills(data.skills)
             } catch (error) {
@@ -113,9 +114,13 @@ const ProjectView = () => {
                 <div className='flex items-center gap-5'>
 
 
-                  <span className='text-desktop-h3 font-bold'>{projectData.title}</span>
-                  <span className='text-center bg-primary-blue min-w-32 px-5 py-1 text-white rounded-xl'>{projectData.stage}</span>
+                  <span className='text-desktop-h4 font-bold'>{projectData.title}</span>
+                  <span className='text-center bg-yellow-100 text-yellow-700 border border-yellow-200 min-w-32 px-5 py-1 rounded-lg'>{projectData.stage}</span>
 
+
+                </div>
+
+                <div>
 
                 </div>
 
@@ -133,16 +138,50 @@ const ProjectView = () => {
             <div>
                     {
                     projectData.github_url && (
-                        <a href={projectData.github_url} target='_blank' className='text-desktop-p max-sm:w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-primary-blue' rel='noopener noreferrer'>
+                        <a href={projectData.github_url} target='_blank' className='text-desktop-p max-sm:w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-primary-blue hover:bg-blue-50 transition-colors' rel='noopener noreferrer'>
                             
                             View on github
                             <img src={Right} alt="R" />
                             
                         </a>
-                        
                     )
                     }
             </div>
+      </div>
+
+      <div className='w-full'>
+        <h2 className='text-desktop-p font-medium'>Project By</h2>
+        <div className='flex flex-col justify-start items-start space-y-2 border border-gray-200 shadow-sm p-6 rounded-lg'>
+
+              <div className='flex flex-col'>
+                <Button to={userId === projectData.user_id ?  `/me` : `/user/${username}`}>
+                    <span className='text-xl font-bold text-neutral-10 hover:text-primary-blue'>{projectData.name}</span>
+                </Button>
+                <span className='text-neutral-9'>@{projectData.username}</span>
+              </div>
+
+
+              <div className='flex flex-wrap gap-2'>
+                <span className='inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-sm font-medium text-gray-700 border border-gray-200'>
+                  <svg className='w-4 h-4 text-blue-600' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  {projectData.campus}
+                </span>
+                <span className='inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-sm font-medium text-gray-700 border border-gray-200'>
+                  <svg className='w-4 h-4 text-green-600' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  Year {projectData.year}
+                </span>
+                <span className='inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-sm font-medium text-gray-700 border border-gray-200'>
+                  <svg className='w-4 h-4 text-purple-600' fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                    {projectData.program}
+                </span>
+              </div>
+          </div>
       </div>
       <div className='w-full'>
         <h2 className='text-desktop-p font-medium'>Description</h2>
@@ -160,11 +199,11 @@ const ProjectView = () => {
       </div>
       <div className='w-full'>
         <h2 className='text-desktop-p font-medium'>Skills Needed</h2>
-        <div className='w-full flex flex-wrap  border border-neutral-5 rounded-lg p-5  gap-4'>
+        <div className='w-full flex flex-wrap  border border-neutral-5 rounded-lg p-6 gap-2'>
           {
             skills.length > 0 ? (
               skills.map(({label}) => (
-                <div key={label} className='flex justify-center items-center bg-blue-100 text-primary-blue px-3 py-1 min-w-18 font-medium rounded-full'>
+                <div key={label} className='px-4 py-2 bg-blue-50 text-primary-blue font-medium rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors'>
                   {label}
                 </div>
               ))
