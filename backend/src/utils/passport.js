@@ -8,77 +8,77 @@ import dotenv from "dotenv"
 dotenv.config();
 
 
-// passport.use(new GoogleStrategy({
-//     clientID: process.env.GOOGLE_CLIENT_ID,
-//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//     callbackURL: "http://localhost:3000/api/v1/auth/google/callback",
-//   },
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/api/v1/auth/google/callback",
+  },
 
-//    async (accessToken, refreshToken, profile, done) => {   
+   async (accessToken, refreshToken, profile, done) => {   
 
-//     try {
-//       const email = profile.emails[0].value;
-//       const name = profile.displayName;
-//       const provider = profile.provider;
+    try {
+      const email = profile.emails[0].value;
+      const name = profile.displayName;
+      const provider = profile.provider;
 
-//       if (!email) {
-//         return done(new Error("Email not found in Google profile"), null);
-//       }
+      if (!email) {
+        return done(new Error("Email not found in Google profile"), null);
+      }
 
-//       const { token, user } = await authService({ email, name, provider });
-//       done(null, {user, token});
+      const { token, user } = await authService({ email, name, provider });
+      done(null, {user, token});
 
-//     } catch (error) {
-//       console.log(error, "ERROR");        
-//       done(error, null)
-//     }
+    } catch (error) {
+      console.log(error, "ERROR");        
+      done(error, null)
+    }
 
-//   }
+  }
 
-// ));
+));
 
-// passport.use(new GitHubStrategy({
-//     clientID: process.env.GITHUB_CLIENT_ID,
-//     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//     callbackURL: "http://localhost:3000/api/v1/auth/github/callback",
-//   },
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/api/v1/auth/github/callback",
+  },
 
-//    async (accessToken, refreshToken, profile, done) => {  
+   async (accessToken, refreshToken, profile, done) => {  
 
-//     try {
+    try {
 
-//       let email = null;        
+      let email = null;        
       
-//       // github not providing email therefore explicitly getting it
-//       const res = await fetch("https://api.github.com/user/emails", {
-//         headers: {
-//           "Authorization": `token ${accessToken}`,
-//           "User-Agent": "crewmate"
-//         }
-//       })
+      // github not providing email therefore explicitly getting it
+      const res = await fetch("https://api.github.com/user/emails", {
+        headers: {
+          "Authorization": `token ${accessToken}`,
+          "User-Agent": "crewmate"
+        }
+      })
 
-//       const data = await res.json();      
+      const data = await res.json();      
       
-//       email = data.find(e => e.primary && e.verified)?.email;    
+      email = data.find(e => e.primary && e.verified)?.email;    
 
-//       const name = profile.displayName;
-//       const provider = profile.provider;
+      const name = profile.displayName;
+      const provider = profile.provider;
       
-//       if (!email) {
-//         return done(new Error("Email not found in Github profile"), null);
-//       }
+      if (!email) {
+        return done(new Error("Email not found in Github profile"), null);
+      }
 
-//       const { token, user } = await authService({ email, name, provider });
-//       done(null, {user, token});
+      const { token, user } = await authService({ email, name, provider });
+      done(null, {user, token});
 
-//     } catch (error) {
-//       console.log(error, "ERROR");        
-//       done(error, null)
-//     }
+    } catch (error) {
+      console.log(error, "ERROR");        
+      done(error, null)
+    }
 
-//   }
+  }
 
-// ));
+));
 
 
 

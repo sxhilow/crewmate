@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes"
-import { addProjectService, deleteProjectService, getAllProjectsService, getProjectRequestsService, getProjectService, respondProjectRequestService, sendProjectRequestService } from "../models/projectModel.js"
+import { addProjectService, deleteProjectService, getAllProjectsService, getProjectRequestsService, getProjectService, getRecommendedProjectsService, respondProjectRequestService, sendProjectRequestService } from "../models/projectModel.js"
 
 
 
@@ -47,5 +47,11 @@ export const respondProjectRequest = async (req, res) => {
 export const getAllRequests = async (req, res) => {
     const {userId} = req.user;
     const result = await getProjectRequestsService(userId)
+    res.status(StatusCodes.OK).json(result)
+}
+
+export const getRecommendedProject = async (req, res) => {
+    const {userId} = req.user;
+    const result = await getRecommendedProjectsService(userId);
     res.status(StatusCodes.OK).json(result)
 }

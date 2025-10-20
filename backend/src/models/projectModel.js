@@ -13,11 +13,16 @@ export const getAllProjectsService = async (limit, offset) => {
 }
 
 export const getProjectService = async (projectId) => {
-    const project = await pool.query("SELECT * FROM projects WHERE id=$1", [projectId])
+    const { rows } = await pool.query(`SELECT p.*, u.username, u.name, u.campus, u.year, u.program 
+                                    FROM projects p
+                                    INNER JOIN users u ON p.user_id = u.id
+                                    WHERE p.id=$1`, [projectId])
 
-    if(!project || project.rows.length === 0){
-        throw new NotFoundError("Project with this ID does not exists")
+    if (rows.length === 0) {
+        throw new NotFoundError("Project with this ID does not exist");
     }
+
+    const project = rows[0]
 
     const projectSkills = await pool.query(`SELECT s.name, s.id 
                                             FROM skills s
@@ -27,8 +32,8 @@ export const getProjectService = async (projectId) => {
     const skills = projectSkills.rows.map(row => ({label: row.name, value: row.id}))
 
     return {
-        project: project.rows[0],
-        skills: skills
+        project,
+        skills
     }
 }
 
@@ -185,6 +190,40 @@ export const getProjectRequestsService = async (userId) => {
 }
 
 
-export const getRecommendedProjectsModel = async () => {
+export const getRecommendedProjectsService = async (userId) => {
+    const result = await pool.query("SELECT * FROM users WHERE id=$1", [userId])
+    const user = result.rows[0]
 
+    if(!user){
+        throw BadRequestError("User dose not exist")
+    }
+
+    const skillsResult = await pool.query(`SELECT s.name, s.id
+                                            FROM skills s 
+                                            INNER JOIN user_skills us ON us.skill_id = s.id
+                                            WHERE us.user_id = $1`, [userId])
+
+    
+    const skills = skillsResult.rows.map(row => row.id)
+    if(skills.length === 0) return [];
+
+    const placeholders = skills.map((_, i) => `$${i + 1}`).join(',')
+
+    // We have to fetch all the projects based on user skills, and to do that,
+    // we fecth all the project from the project_skills table where the skill_id = the user skills...
+
+    // Count(ps.skill_id) counts the number of skills from the project_skills table that matches the user skills
+
+    const projectsBySkills = await pool.query(`SELECT 
+                                            p.*, 
+                                            COUNT(ps.skill_id) AS matched_skills 
+                                            FROM projects p
+                                            INNER JOIN project_skills ps ON ps.project_id = p.id
+                                            WHERE ps.skill_id IN (${placeholders})
+                                            GROUP BY p.id
+                                            ORDER BY matched_skills DESC`, skills);
+    
+    return {
+        projects: projectsBySkills.rows
+    }
 }

@@ -5,7 +5,6 @@ import { BadRequestError } from "../errors/bad-request.js";
 export const me = async(req, res) => {
 
     const { userId } = req.user;
-
     const user = await meService(userId)
     res.status(StatusCodes.OK).json(user)
 }

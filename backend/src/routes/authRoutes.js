@@ -8,36 +8,36 @@ const router = express.Router();
 router.get("/me", authMiddleware, me)
 
 
-// router.get("/google", 
+router.get("/google", 
   
-//   passport.authenticate('google', { scope: [
-//         'openid', 'email', 'profile']
-//   })
-// )
+  passport.authenticate('google', { scope: [
+        'openid', 'email', 'profile']
+  })
+)
 
-// router.get("/google/callback", 
+router.get("/google/callback", 
 
-//     passport.authenticate('google', {session: false, faliureRedirect: '/login'}),
+    passport.authenticate('google', {session: false, faliureRedirect: '/login'}),
 
-//     function(req, res){
-//         const { token } = req.user;
-//         res.redirect(`http://localhost:5173/auth-redirect?token=${token}`)
-//     }
+    function(req, res){
+        const { token } = req.user;
+        res.redirect(`http://localhost:5173/auth-redirect?token=${token}`)
+    }
 
-// )
+)
 
-// router.get('/github',
-//   passport.authenticate('github', { scope: ['user:email'] })
-// );
+router.get('/github',
+  passport.authenticate('github', { scope: ['user:email'] })
+);
 
-// router.get('/github/callback', 
-//   passport.authenticate('github', {session: false, failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     const { token } = req.user;
-//     res.redirect(`http://localhost:5173/auth-redirect?token=${token}`)
-//   }
-// );
+router.get('/github/callback', 
+  passport.authenticate('github', {session: false, failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    const { token } = req.user;
+    res.redirect(`http://localhost:5173/auth-redirect?token=${token}`)
+  }
+);
 
 
 router.get('/microsoft',
